@@ -1,4 +1,4 @@
-<a href="javascript:document.getElementById('disqus_thread').style.display='block'">显示评论</a>
+<a href="###" onclick="document.getElementById('disqus_thread').style.display='block'">显示评论</a>
 <div id="disqus_thread" style="display:none;"></div>
  <script type="text/javascript">
      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
