@@ -2,10 +2,11 @@
 <script>
 function showComment(){
     document.getElementById('disqus_thread').style.display='block';
-    document.getElementById('toggleComment').innerHTML="收起评论&lt;&lt;";
+    document.getElementById('toggleComment').innerHTML="&lt;&lt;收起评论";
     document.getElementById('toggleComment').setAttribute("onclick","hideComment()");
 }
 function hideComment(){
+    document.getElementById('disqus_thread').style.display='none';
     document.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
     document.getElementById('toggleComment').setAttribute("onclick","showComment()");
 }
