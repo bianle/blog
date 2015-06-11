@@ -1,5 +1,5 @@
 <a href="javascript:document.getElementById('disqus_thread').style.display='block'">显示评论</a>
-<div id="disqus_thread"></div>
+<div id="disqus_thread" style="display:none;"></div>
  <script type="text/javascript">
      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
      var disqus_shortname = '{{site.disqusname}}'; // required: replace example with your forum shortname
