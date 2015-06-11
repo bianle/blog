@@ -1,8 +1,13 @@
-<a href="javascript:void(0);" onclick="showComment()">显示评论</a>
+<a id="toggleComment" href="javascript:void(0);" onclick="showComment()">展开评论&gt;&gt;</a>
 <script>
 function showComment(){
     document.getElementById('disqus_thread').style.display='block';
-    
+    documnet.getElementById('toggleComment').innerHTML="收起评论&lt;&lt;";
+    documnet.getElementById('toggleComment').setAttribute("onclick","hideComment()");
+}
+function hideComment(){
+    documnet.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
+    documnet.getElementById('toggleComment').setAttribute("onclick","showComment()");
 }
 </script>
 <div id="disqus_thread" style="display:none;"></div>
