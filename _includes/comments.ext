@@ -2,12 +2,12 @@
 <script>
 function showComment(){
     document.getElementById('disqus_thread').style.display='block';
-    documnet.getElementById('toggleComment').innerHTML="收起评论&lt;&lt;";
-    documnet.getElementById('toggleComment').setAttribute("onclick","hideComment()");
+    document.getElementById('toggleComment').innerHTML="收起评论&lt;&lt;";
+    document.getElementById('toggleComment').setAttribute("onclick","hideComment()");
 }
 function hideComment(){
-    documnet.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
-    documnet.getElementById('toggleComment').setAttribute("onclick","showComment()");
+    document.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
+    document.getElementById('toggleComment').setAttribute("onclick","showComment()");
 }
 </script>
 <div id="disqus_thread" style="display:none;"></div>
