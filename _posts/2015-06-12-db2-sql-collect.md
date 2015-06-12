@@ -1,0 +1,20 @@
+---
+layout: post
+title: db2 SQL 收集
+category: db
+comments: false
+---
+
+*** 递归
+```sql
+WITH N(LEVEL,CHAIN,ID,PID) AS
+(
+ SELECT 1,CAST(ID AS VARCHAR(100)),ID,PID
+ FROM SOMETABLE
+ WHER PID IS NULL
+ UNION ALL
+ SELECT N.LEVEL+1,N.CHAIN||','||N1.ID,N1.ID,N1.PID
+ FROM SOMETABLE AS N1,N
+ WHERE N.ID=N1.PID
+)
+```
