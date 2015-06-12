@@ -2,7 +2,7 @@
 layout: post
 title: db2 SQL 收集
 category: db
-comments: false
+comments: true
 ---
 
 ### 递归
