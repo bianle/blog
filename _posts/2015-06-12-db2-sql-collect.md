@@ -6,7 +6,7 @@ comments: false
 ---
 
 *** 递归
-```sql
+```java
 WITH N(LEVEL,CHAIN,ID,PID) AS
 (
  SELECT 1,CAST(ID AS VARCHAR(100)),ID,PID
