@@ -2,7 +2,7 @@
 layout: post
 title: db2 SQL 收集
 category: db
-comments: false
+comments: true
 ---
 
 ### 递归
@@ -20,6 +20,7 @@ WITH N(LEVEL,CHAIN,ID,PID) AS
 ```
 ### 备份表
 * 物化查询表
+
 ```sql
 --1.创建查询表
 CREATE TABLE SOMETABLE_BAK AS (SELECT * FROM SOMETABLE)
@@ -31,11 +32,13 @@ REFESH TABLE SOMETABLE_BAK;
 ALTER TABLE SOMETABLE_BAK DROP MATERIALIZED QUERY;
 ```
 * 先create,再inert
+
 ```sql
 CREATE TABLE SOMETABLE_BAK LIKE SOMETABLE;
 INSERT INTO SOMETABLE_BAK SELECT * FROM SOMETABLE;
 ```
 * 结果表
+
 ```sql
 CREATE TABLE SOMETABLE_BAK AS (SELECT * FORM SOMETABLE) DEFINITION ONLY;
 ```
