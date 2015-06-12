@@ -55,7 +55,7 @@ StrayBirds
 - time-machine
 	![time-machine-demo](/images/time-machine-demo.png) 
 - kunka
-	![kunka-demo](/images/kunka.png)
+	![kunka-demo](/images/kunka-demo.png)
 
 * 修改项目名
 
@@ -83,9 +83,10 @@ StrayBirds
 
 ```
 ---
-layout: default
+layout: post
 title: Java 中的并发
 comments: true
+category: 技术
 ---
 
 
