@@ -1,9 +1,10 @@
 ---
-layout:post
-title:js代码收集
-category:html
-comments:false
+layout: post
+title: js代码收集
+category: html
+comments: false
 ---
+
 ### js 扩展方法
 * startWith , endWith
 
