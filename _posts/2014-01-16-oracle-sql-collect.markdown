@@ -1,21 +1,21 @@
 ---
 layout: post
-title: oracle SQL ÊÕ¼¯
+title: oracle SQL æ”¶é›†
 category: db
 comments: false
 ---
 
-### Ö÷¼ü×ÔÔö
+### ä¸»é”®è‡ªå¢ž
 
 ```sql
-/*1.ÐÂ½¨Ë÷Òý*/
+/*1.æ–°å»ºç´¢å¼•*/
 CREATE SEQUENCE SEQ_FOR_TB1
-INCREMENT BY 1 /*-¨C Ã¿´Î¼Ó¼¸¸ö*/
-START WITH 1 /*-¨C ´Ó1¿ªÊ¼¼ÆÊý*/
-NOMAXVALUE /*-¨C ²»ÉèÖÃ×î´óÖµ*/
-NOCYCLE /*-¨C Ò»Ö±ÀÛ¼Ó£¬²»Ñ­»·*/
+INCREMENT BY 1 /*-â€“ æ¯æ¬¡åŠ å‡ ä¸ª*/
+START WITH 1 /*-â€“ ä»Ž1å¼€å§‹è®¡æ•°*/
+NOMAXVALUE /*-â€“ ä¸è®¾ç½®æœ€å¤§å€¼*/
+NOCYCLE /*-â€“ ä¸€ç›´ç´¯åŠ ï¼Œä¸å¾ªçŽ¯*/
 CACHE 10;
-/*2.Ôö¼Ó´¥·¢Æ÷*/
+/*2.å¢žåŠ è§¦å‘å™¨*/
 CREATE TRIGGER TB1_AUTO_PK BEFORE
 insert ON t_tb FOR EACH ROW
 begin
@@ -24,28 +24,28 @@ end;
 
 ```
 
-### ÕýÔò±í´ïÊ½
+### æ­£åˆ™è¡¨è¾¾å¼
 
 ```sql
 SELECT REGEXP_REPLACE('[1,2,3]99990.0[%]','\[[^\[]*\]','') FROM dual; 
 ```
 
-### ·ÖÎöº¯Êý
+### åˆ†æžå‡½æ•°
 
 * SYS_CONNECT_BY_PATH
 
-·Ö×éÇóºÍ£¬ÎÄ×ÖÀàÐÍÒÔ¶ººÅÆ´½Ó
+åˆ†ç»„æ±‚å’Œï¼Œæ–‡å­—ç±»åž‹ä»¥é€—å·æ‹¼æŽ¥
 
   ND   XL  BZ
-1 2012 100 Æ»¹û
-2 2013 200 Æ»¹û
-3 2014 300 Æ»¹û
-4 2012 200 Ïã½¶
-5 2013 300 Ïã½¶
-6 2014 400 Ïã½¶
-7 2014 600 éÙ×Ó
+1 2012 100 è‹¹æžœ
+2 2013 200 è‹¹æžœ
+3 2014 300 è‹¹æžœ
+4 2012 200 é¦™è•‰
+5 2013 300 é¦™è•‰
+6 2014 400 é¦™è•‰
+7 2014 600 æ©˜å­
 
-°´Äê¶È·Ö×éÇóÃ¿ÄêÏúÁ¿£¬¼°Ã¿ÄêÏúÊÛÖÖÀà
+æŒ‰å¹´åº¦åˆ†ç»„æ±‚æ¯å¹´é”€é‡ï¼ŒåŠæ¯å¹´é”€å”®ç§ç±»
 
 ```sql
 SELECT ND,
@@ -59,7 +59,7 @@ CONNECT BY PRIOR RN + 1 = RN
  GROUP BY ND;
 ```
 
-* ÀÛ¼Æ
+* ç´¯è®¡
 
 ```sql
 WITH T AS
@@ -97,96 +97,96 @@ SELECT T.M,
 
 ```sql
 
---´´½¨²âÊÔ±í
+--åˆ›å»ºæµ‹è¯•è¡¨
 CREATE TABLE SMP (A DATE);
---´´½¨²âÊÔ´æ´¢¹ý³Ì
+--åˆ›å»ºæµ‹è¯•å­˜å‚¨è¿‡ç¨‹
 CREATE OR REPLACE PROCEDURE SMP_PROC AS
 BEGIN
     INSERT INTO SMP VALUES (SYSDATE)
 END;
 
---1.¶¨ÒåÊý×Ö
+--1.å®šä¹‰æ•°å­—
 DECLARE SMP_NUM NUMBER;
 
---2.¶¨Òåjob
+--2.å®šä¹‰job
 BEGIN
     DBMS_JOB.SUBMIT(
         JOB=>SMP_JOB,
 		WHAT=>'SMP_PROC'
 		NEXT_DATE=>SYSDATE
-		INTERVAL=>'TRUNC(SYSDATE + 1) + (7*60+30)/(24*60)',/*Ã¿Ìì7µã°ë*/
+		INTERVAL=>'TRUNC(SYSDATE + 1) + (7*60+30)/(24*60)',/*æ¯å¤©7ç‚¹åŠ*/
 		NO_PARSE=>TRUE
     )
 END;
 
---3.²éÑ¯job
+--3.æŸ¥è¯¢job
 SELECT * FROM USER_JOBS;
 
---4.É¾³ýjob
+--4.åˆ é™¤job
 BEGIN
 SBMS_JOB.REMOVE(150);
 END;
 
---5.ÐÞ¸Äjob
+--5.ä¿®æ”¹job
 BEGIN
 DBMS_JOB.BROKEN(287,FALSE,TRUNC(SYSDATE,'HH')+2/24);
 END;
 
---6.Æô¶¯job
+--6.å¯åŠ¨job
 BEGIN
 DBMS_JOB.RUN(287);
 END;
 
 /*--------------------------------------------------*/
 
-/*Ã¿¸öÎçÒ¹12µã*/
+/*æ¯ä¸ªåˆå¤œ12ç‚¹*/
 SELECT TRUNC(SYSDATE + 1) FROM DUAL;
 
-/*Ã¿¸öÔçÉÏ8µã°ë*/
-SELECT TRUNC(SYSDATE + 1) + (8 * 60 + 30£© / (24 * 60) FROM DUAL;
+/*æ¯ä¸ªæ—©ä¸Š8ç‚¹åŠ*/
+SELECT TRUNC(SYSDATE + 1) + (8 * 60 + 30ï¼‰ / (24 * 60) FROM DUAL;
 
-/*Ã¿¸öÐÇÆÚ¶þÖÐÎç12µã*/
-SELECT NEXT_DAY(TRUNC(SYSDATE), 'ÐÇÆÚ¶þ') + 12 / 24 FROM DUAL;
+/*æ¯ä¸ªæ˜ŸæœŸäºŒä¸­åˆ12ç‚¹*/
+SELECT NEXT_DAY(TRUNC(SYSDATE), 'æ˜ŸæœŸäºŒ') + 12 / 24 FROM DUAL;
 
-/*Ã¿ÔÂµÚÒ»ÌìµÄ12µã*/
+/*æ¯æœˆç¬¬ä¸€å¤©çš„12ç‚¹*/
 SELECT TRUNC(LAST_DAY(SYSDATE) + 1) FROM DUAL;
 
-/*Ã¿¸ö¼¾¶È×îºóÒ»ÌìµÄÍíÉÏ11µã*/
+/*æ¯ä¸ªå­£åº¦æœ€åŽä¸€å¤©çš„æ™šä¸Š11ç‚¹*/
 SELECT TRUNC(ADD_MONTHS(SYSDATE + 2 / 24, 3), 'Q') - 1 / 24 FROM DUAL;
 
-/*Ã¿ÐÇÆÚÁùºÍÈÕÔçÉÏ6µã10·Ö*/
-SELECT TRUNC(LEAST(NEXT_DAY(SYSDATE, 'ÐÇÆÚÁù'), NEXT_DAY(SYSDATE, 'ÐÇÆÚÈÕ'))) +
-       £¨6 * 60 + 10£© / (24 * 60)
+/*æ¯æ˜ŸæœŸå…­å’Œæ—¥æ—©ä¸Š6ç‚¹10åˆ†*/
+SELECT TRUNC(LEAST(NEXT_DAY(SYSDATE, 'æ˜ŸæœŸå…­'), NEXT_DAY(SYSDATE, 'æ˜ŸæœŸæ—¥'))) +
+       ï¼ˆ6 * 60 + 10ï¼‰ / (24 * 60)
   FROM DUAL;
 
-/*Ã¿·ÖÖÓ*/
+/*æ¯åˆ†é’Ÿ*/
 SELECT TRUNC(SYSDATE, 'mi') + 1 / (24 * 60), SYSDATE + 1 / 1440 FROM DUAL;
 
-/*Ã¿ÌìÁè³¿1µã*/
+/*æ¯å¤©å‡Œæ™¨1ç‚¹*/
 SELECT TRUNC(SYSDATE) + 1 + 1 / (24) FROM DUAL;
 
-/*Ã¿ÖÜÒ»Áè³¿1µã*/
-SELECT TRUNC(NEXT_DAY(SYSDATE, 'ÐÇÆÚÒ»')) + 1 / 24 FROM DUAL;
+/*æ¯å‘¨ä¸€å‡Œæ™¨1ç‚¹*/
+SELECT TRUNC(NEXT_DAY(SYSDATE, 'æ˜ŸæœŸä¸€')) + 1 / 24 FROM DUAL;
 
-/*Ã¿ÔÂ1ÈÕÁè³¿1µã*/
+/*æ¯æœˆ1æ—¥å‡Œæ™¨1ç‚¹*/
 SELECT TRUNC(LAST_DAY(SYSDATE)) + 1 + 1 / 24 FROM DUAL;
 
-/*Ã¿¼¾¶ÈµÚÒ»ÌìÁè³¿1µã*/
+/*æ¯å­£åº¦ç¬¬ä¸€å¤©å‡Œæ™¨1ç‚¹*/
 SELECT TRUNC(ADD_MONTHS(SYSDATE, 3), 'Q') + 1 / 24 FROM DUAL;
 
-/*Ã¿Äê7ÔÂ1ÈÕÁè³¿1µã*/
+/*æ¯å¹´7æœˆ1æ—¥å‡Œæ™¨1ç‚¹*/
 SELECT ADD_MONTHS(TRUNC(SYSDATE, 'yyyy'), 6) + 1 / 24 FROM DUAL;
 
-/*Ã¿Äê1ÔÂ1ÈÕÁè³¿1µã*/
+/*æ¯å¹´1æœˆ1æ—¥å‡Œæ™¨1ç‚¹*/
 SELECT ADD_MONTHS(TRUNC(SYSDATE, 'yyyy'), 12) + 1 / 24 FROM DUAL;
 
 /*--------------------------------------------------*/
 
 ```
 
-### oracle ¼ÇÂ¼±»Ëø×¡
+### oracle è®°å½•è¢«é”ä½
 
-* µ¥½Úµã
+* å•èŠ‚ç‚¹
 
 ```sql
 SELECT OBJECT_ID, SESSION_ID, LOCKED_MODE FROM V$LOCKED_OBJECT;
@@ -197,7 +197,7 @@ SELECT T2.USERNAME, T2.SID, T2.SERIAL#, T2.LOGON_TIME
 
 ALTER SYSTEM KILL SESSION '290,5393'; /* SID,SERIAL# */
 
---²éÑ¯µ¼ÖÂ±»ËøµÄSQLÓï¾ä
+--æŸ¥è¯¢å¯¼è‡´è¢«é”çš„SQLè¯­å¥
 SELECT SQL_TEXT
   FROM V$SQL
  WHERE HASH_VALUE IN
@@ -205,7 +205,7 @@ SELECT SQL_TEXT
           FROM V$SESSION
          WHERE SID IN (SELECT SESSION_ID FROM V$LOCKED_OBJECT))
 
---ÅúÁ¿É±session
+--æ‰¹é‡æ€session
 SELECT SID,
        SERIAL#,
        USERNAME,
@@ -216,19 +216,19 @@ SELECT SID,
 
 ```
 
-* ¼¯Èº
+* é›†ç¾¤
 
 ```sql
-/*²ésession£¨Èç¹ûÊý¾Ý¿â¼¯Èºgv$session£©*/
-select username,sid,serial# from gv$session WHERE username LIKE 'GDSAFETY'/*ÓÃ»§*/
+/*æŸ¥sessionï¼ˆå¦‚æžœæ•°æ®åº“é›†ç¾¤gv$sessionï¼‰*/
+select username,sid,serial# from gv$session WHERE username LIKE 'GDSAFETY'/*ç”¨æˆ·*/
 
-/*É±session*/
+/*æ€session*/
 alter system kill session'153,20765' 
-/*gv$ÊÇÈ«¾ÖÊÓÍ¼£¬¶øv$ÊÇÕë¶ÔÄ³¸öÊµÀýµÄÊÓÍ¼£¬$XÊÇËùÓÐgv$µÄÊý¾ÝÀ´Ô´£¬´Ógv$µ½v$ÐèÒª¼ÓÉÏwhere inst_id = USERENV(¡¯Instance¡¯)*/
+/*gv$æ˜¯å…¨å±€è§†å›¾ï¼Œè€Œv$æ˜¯é’ˆå¯¹æŸä¸ªå®žä¾‹çš„è§†å›¾ï¼Œ$Xæ˜¯æ‰€æœ‰gv$çš„æ•°æ®æ¥æºï¼Œä»Žgv$åˆ°v$éœ€è¦åŠ ä¸Šwhere inst_id = USERENV(â€™Instanceâ€™)*/
 SELECT S.INST_ID,
        S.SID,
        S.SERIAL#,
-       P.SPID, /*Ïß³ÌºÅ*/
+       P.SPID, /*çº¿ç¨‹å·*/
        S.USERNAME,
        S.PROGRAM,
        P.PID
@@ -240,16 +240,16 @@ SELECT S.INST_ID,
    AND S.USERNAME = 'GDSAFETY'
 ```
 
-* Ëø×¡Ê±¼ä¹ý³¤¶øÉ±²»ËÀµÄ
+* é”ä½æ—¶é—´è¿‡é•¿è€Œæ€ä¸æ­»çš„
 
 ```sql
-/*OS¼¶É±Ïß³Ìlinux*/
+/*OSçº§æ€çº¿ç¨‹linux*/
 kill -9 12345 /*spid*/
-/*OS¼¶É±Ïß³Ìwindows*/
-orakill orcl/*ÊµÀýÃû*/ 12345/*spid*/
+/*OSçº§æ€çº¿ç¨‹windows*/
+orakill orcl/*å®žä¾‹å*/ 12345/*spid*/
 ```
 
-### É¾³ýÓÃ»§
+### åˆ é™¤ç”¨æˆ·
 
 ```sql
 alter user XXX account lock;
@@ -258,24 +258,24 @@ alter system kill session '147,3749';
 drop user XXX CASCADE;
 ```
 
-### ÐÞ¸ÄÓÃ»§ÃÜÂë
+### ä¿®æ”¹ç”¨æˆ·å¯†ç 
 
 ```sql
 sqlplus / as sysdba ;
-alter user system/*ÓÃ»§*/ identified by abc/*ÐÂÃÜÂë*/; 
+alter user system/*ç”¨æˆ·*/ identified by abc/*æ–°å¯†ç */; 
 ```
 
-### ÓÐÈ¤µÄÃæÊÔÌâ
+### æœ‰è¶£çš„é¢è¯•é¢˜
 
 ```sql
 
--- Ð¡Ð¡+°Ô°Ô+ÍõÍõ=Ð¡°ÔÍõ
---Ð¡=? °Ô=? Íõ=?
+-- å°å°+éœ¸éœ¸+çŽ‹çŽ‹=å°éœ¸çŽ‹
+--å°=? éœ¸=? çŽ‹=?
 --1,9,8
 --xx+yy+zz=xyz
 --x=?,y=?,z=?
 
---ÎÒµÄ´ð°¸
+--æˆ‘çš„ç­”æ¡ˆ
 WITH T AS
  (SELECT ROWNUM - 1 RN FROM DUAL CONNECT BY ROWNUM <= 10)
 SELECT T1.RN A, T2.RN B, T3.RN C
@@ -283,7 +283,7 @@ SELECT T1.RN A, T2.RN B, T3.RN C
  WHERE TO_NUMBER(T1.RN || T1.RN) + TO_NUMBER(T2.RN || T2.RN) +
        TO_NUMBER(T3.RN || T3.RN) = TO_NUMBER(T1.RN || T2.RN || T3.RN);
 
---¹Ù·½µÄ
+--å®˜æ–¹çš„
 WITH N_LIST AS
  (SELECT ROWNUM N FROM DUAL CONNECT BY ROWNUM < 1000)
 SELECT N
@@ -295,7 +295,7 @@ SELECT N
 
 ```
 
-### sql Ö´ÐÐÊ±¼ä³¤
+### sql æ‰§è¡Œæ—¶é—´é•¿
 
 ```sql
 SELECT * FROM v$session WHERE username = 'XXX';
@@ -304,98 +304,98 @@ SELECT * FROM v$transaction;
 SELECT NAME, VALUE FROM gv$parameter WHERE NAME = 'resource_limit';
 
 
---²é¿´resource limitÊÇ·ñ¿ªÆô
+--æŸ¥çœ‹resource limitæ˜¯å¦å¼€å¯
  SELECT NAME, VALUE FROM gv$parameter WHERE NAME = 'resource_limit';
- --¿ªÆôresource limit
+ --å¼€å¯resource limit
  ALTER system SET resource_limit = TRUE;
  
---²éÑ¯×ÊÔ´ÎÄ¼þ£¬ÕÒµ½CONNECT_TIMEËùÔÚµÄprofileÃû¡£
+--æŸ¥è¯¢èµ„æºæ–‡ä»¶ï¼Œæ‰¾åˆ°CONNECT_TIMEæ‰€åœ¨çš„profileåã€‚
  SELECT resource_name, profile FROM dba_profiles;
- --ÓÃalterÃüÁîÐÞ¸ÄprofileÖÐµÄÖµ£»--£¨»ò¸úÒ»¸öÊ±¼äÖµ£¬Èç1000£¬µ¥Î»Îª·ÖÖÓ£©
+ --ç”¨alterå‘½ä»¤ä¿®æ”¹profileä¸­çš„å€¼ï¼›--ï¼ˆæˆ–è·Ÿä¸€ä¸ªæ—¶é—´å€¼ï¼Œå¦‚1000ï¼Œå•ä½ä¸ºåˆ†é’Ÿï¼‰
  ALTER profile monitoring_profile LIMIT connect_time unlimited;
  ALTER profile monitoring_profile LIMIT idle_time unlimited;
  
---ÓÃÈçÏÂÃüÁî²é¿´profileÖÐµÄÖµ£»
+--ç”¨å¦‚ä¸‹å‘½ä»¤æŸ¥çœ‹profileä¸­çš„å€¼ï¼›
  SELECT resource_name, LIMIT
    FROM dba_profiles
  WHERE profile = 'MONITORING_PROFILE';
 
 ```
 
-### oracle ²é¿´×´Ì¬
+### oracle æŸ¥çœ‹çŠ¶æ€
 
-* ²é¿´±í¿Õ¼äÊ¹ÓÃÇé¿ö
+* æŸ¥çœ‹è¡¨ç©ºé—´ä½¿ç”¨æƒ…å†µ
 
 ```sql
-SELECT UPPER(F.TABLESPACE_NAME) "±í¿Õ¼äÃû",
-¡¡¡¡D.TOT_GROOTTE_MB "±í¿Õ¼ä´óÐ¡(M)",
-¡¡¡¡D.TOT_GROOTTE_MB - F.TOTAL_BYTES "ÒÑÊ¹ÓÃ¿Õ¼ä(M)",
-¡¡¡¡TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),'990.99') || '%' "Ê¹ÓÃ±È",
-¡¡¡¡F.TOTAL_BYTES "¿ÕÏÐ¿Õ¼ä(M)",
-¡¡¡¡F.MAX_BYTES "×î´ó¿é(M)"
-¡¡¡¡FROM (SELECT TABLESPACE_NAME,
-¡¡¡¡ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,
-¡¡¡¡ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES
-¡¡¡¡FROM SYS.DBA_FREE_SPACE
-¡¡¡¡GROUP BY TABLESPACE_NAME) F,
-¡¡¡¡(SELECT DD.TABLESPACE_NAME,
-¡¡¡¡ ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB
-¡¡¡¡FROM SYS.DBA_DATA_FILES DD
-¡¡¡¡GROUP BY DD.TABLESPACE_NAME) D
-¡¡¡¡WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME
-¡¡¡¡ORDER BY 1;
+SELECT UPPER(F.TABLESPACE_NAME) "è¡¨ç©ºé—´å",
+ã€€ã€€D.TOT_GROOTTE_MB "è¡¨ç©ºé—´å¤§å°(M)",
+ã€€ã€€D.TOT_GROOTTE_MB - F.TOTAL_BYTES "å·²ä½¿ç”¨ç©ºé—´(M)",
+ã€€ã€€TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),'990.99') || '%' "ä½¿ç”¨æ¯”",
+ã€€ã€€F.TOTAL_BYTES "ç©ºé—²ç©ºé—´(M)",
+ã€€ã€€F.MAX_BYTES "æœ€å¤§å—(M)"
+ã€€ã€€FROM (SELECT TABLESPACE_NAME,
+ã€€ã€€ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,
+ã€€ã€€ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES
+ã€€ã€€FROM SYS.DBA_FREE_SPACE
+ã€€ã€€GROUP BY TABLESPACE_NAME) F,
+ã€€ã€€(SELECT DD.TABLESPACE_NAME,
+ã€€ã€€ ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB
+ã€€ã€€FROM SYS.DBA_DATA_FILES DD
+ã€€ã€€GROUP BY DD.TABLESPACE_NAME) D
+ã€€ã€€WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME
+ã€€ã€€ORDER BY 1;
 ```
 
-* ²é¿´±í¿Õ¼ä¿ÉÓÃÈÝÁ¿
+* æŸ¥çœ‹è¡¨ç©ºé—´å¯ç”¨å®¹é‡
 
 ```sql
 select tablespace_name,
-¡¡¡¡count(*) as extends,
-¡¡¡¡round(sum(bytes) / 1024 / 1024, 2) as MB,
-¡¡¡¡sum(blocks) as blocks
-¡¡¡¡from dba_free_space
-¡¡¡¡group by tablespace_name;
+ã€€ã€€count(*) as extends,
+ã€€ã€€round(sum(bytes) / 1024 / 1024, 2) as MB,
+ã€€ã€€sum(blocks) as blocks
+ã€€ã€€from dba_free_space
+ã€€ã€€group by tablespace_name;
 ```
 
-* ²é¿´ÕýÔÚÖ´ÐÐµÄSQLºÍÖ´ÐÐ¸ÃSQLµÄÓÃ»§
+* æŸ¥çœ‹æ­£åœ¨æ‰§è¡Œçš„SQLå’Œæ‰§è¡Œè¯¥SQLçš„ç”¨æˆ·
 
 ```sql
---²éÑ¯OracleÕýÔÚÖ´ÐÐµÄsqlÓï¾ä¼°Ö´ÐÐ¸ÃÓï¾äµÄÓÃ»§
+--æŸ¥è¯¢Oracleæ­£åœ¨æ‰§è¡Œçš„sqlè¯­å¥åŠæ‰§è¡Œè¯¥è¯­å¥çš„ç”¨æˆ·
 SELECT b.sid oracleID,
-       b.username µÇÂ¼OracleÓÃ»§Ãû,
+       b.username ç™»å½•Oracleç”¨æˆ·å,
        b.serial#,
-       spid ²Ù×÷ÏµÍ³ID,
+       spid æ“ä½œç³»ç»ŸID,
        paddr,
-       sql_text ÕýÔÚÖ´ÐÐµÄSQL,
-       b.machine ¼ÆËã»úÃû
+       sql_text æ­£åœ¨æ‰§è¡Œçš„SQL,
+       b.machine è®¡ç®—æœºå
 FROM v$process a, v$session b, v$sqlarea c
 WHERE a.addr = b.paddr
    AND b.sql_hash_value = c.hash_value
    AND b.username = 'GDSAFETY'
    
---²é¿´ÕýÔÚÖ´ÐÐsqlµÄ·¢ÆðÕßºÍ·¢Æð³ÌÐò
-SELECT OSUSER µçÄÔµÇÂ¼Éí·Ý,
-       PROGRAM ·¢ÆðÇëÇóµÄ³ÌÐò,
-       USERNAME µÇÂ¼ÏµÍ³µÄÓÃ»§Ãû,
+--æŸ¥çœ‹æ­£åœ¨æ‰§è¡Œsqlçš„å‘èµ·è€…å’Œå‘èµ·ç¨‹åº
+SELECT OSUSER ç”µè„‘ç™»å½•èº«ä»½,
+       PROGRAM å‘èµ·è¯·æ±‚çš„ç¨‹åº,
+       USERNAME ç™»å½•ç³»ç»Ÿçš„ç”¨æˆ·å,
        SCHEMANAME,
-       B.Cpu_Time »¨·ÑcpuµÄÊ±¼ä,
+       B.Cpu_Time èŠ±è´¹cpuçš„æ—¶é—´,
        STATUS,
-       B.SQL_TEXT Ö´ÐÐµÄsql
+       B.SQL_TEXT æ‰§è¡Œçš„sql
 FROM V$SESSION A
 LEFT JOIN V$SQL B ON A.SQL_ADDRESS = B.ADDRESS
                    AND A.SQL_HASH_VALUE = B.HASH_VALUE
 ORDER BY b.cpu_time DESC
 
---²é³öoracleµ±Ç°µÄ±»Ëø¶ÔÏó
+--æŸ¥å‡ºoracleå½“å‰çš„è¢«é”å¯¹è±¡
 SELECT l.session_id sid,
        s.serial#,
-       l.locked_mode ËøÄ£Ê½,
-       l.oracle_username µÇÂ¼ÓÃ»§,
-       l.os_user_name µÇÂ¼»úÆ÷ÓÃ»§Ãû,
-       s.machine »úÆ÷Ãû,
-       s.terminal ÖÕ¶ËÓÃ»§Ãû,
-       o.object_name ±»Ëø¶ÔÏóÃû,
-       s.logon_time µÇÂ¼Êý¾Ý¿âÊ±¼ä
+       l.locked_mode é”æ¨¡å¼,
+       l.oracle_username ç™»å½•ç”¨æˆ·,
+       l.os_user_name ç™»å½•æœºå™¨ç”¨æˆ·å,
+       s.machine æœºå™¨å,
+       s.terminal ç»ˆç«¯ç”¨æˆ·å,
+       o.object_name è¢«é”å¯¹è±¡å,
+       s.logon_time ç™»å½•æ•°æ®åº“æ—¶é—´
 FROM v$locked_object l, all_objects o, v$session s
 WHERE l.object_id = o.object_id
    AND l.session_id = s.sid
@@ -403,7 +403,7 @@ ORDER BY sid, s.serial#;
 
 ```
 
-* ²é¿´±í½á¹¹
+* æŸ¥çœ‹è¡¨ç»“æž„
 
 ```sql
 SELECT T.OBJECT_NAME,
@@ -419,14 +419,14 @@ SELECT T.OBJECT_NAME,
 ```
 
 
-* ²é¿´±í´óÐ¡
+* æŸ¥çœ‹è¡¨å¤§å°
 
 ```sql
 Select Segment_Name,Sum(bytes)/1024/1024 sz From User_Extents Group By Segment_Name ORDER BY sz DESC;
 
 ```
 
-* ²éÑ¯²åÈë¼ÇÂ¼µÄÊ±¼ä
+* æŸ¥è¯¢æ’å…¥è®°å½•çš„æ—¶é—´
 
 ```sql
 SELECT t.*,ORA_ROWSCN FROM sms_log t;
@@ -435,9 +435,9 @@ select to_char(scn_to_timestamp(10896271687717),'yyyy-mm-dd hh24:mi:ss') insert_
 
 ```
 
-### oracle ´íÎó½â¾ö°ì·¨
+### oracle é”™è¯¯è§£å†³åŠžæ³•
 
-* ORA-01658 : ÎÞ·¨Îª±í¿Õ¼äspaceÖÐµÄ¶Î´´½¨ INITIAL Çø£»
+* ORA-01658 : æ— æ³•ä¸ºè¡¨ç©ºé—´spaceä¸­çš„æ®µåˆ›å»º INITIAL åŒºï¼›
 
 ```sql
 SELECT SEGMENT_TYPE, OWNER, SUM(BYTES) / 1024 / 1024
@@ -446,17 +446,17 @@ SELECT SEGMENT_TYPE, OWNER, SUM(BYTES) / 1024 / 1024
  GROUP BY SEGMENT_TYPE, OWNER;
 
 SELECT *
-  FROM DBA_TABLESPACES --²é¿´±í¿Õ¼ä
-       --²é¿´±í¿Õ¼äÎÄ¼þÂ·¾¶
+  FROM DBA_TABLESPACES --æŸ¥çœ‹è¡¨ç©ºé—´
+       --æŸ¥çœ‹è¡¨ç©ºé—´æ–‡ä»¶è·¯å¾„
          SELECT TABLESPACE_NAME,
                 FILE_ID,
                 BYTES / 1024 / 1024,
-                FILE_NAME ¡¡¡¡
+                FILE_NAME ã€€ã€€
            FROM DBA_DATA_FILES
           ORDER BY FILE_ID;
 
 
---²é¿´ÓÃ»§ºÍÄ¬ÈÏ±í¿Õ¼äµÄ¹ØÏµ
+--æŸ¥çœ‹ç”¨æˆ·å’Œé»˜è®¤è¡¨ç©ºé—´çš„å…³ç³»
 SELECT USERNAME, DEFAULT_TABLESPACE FROM DBA_USERS;
 
 --alter tablespace USERS add datafile 'D:\SOFTWARE\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\USERS01.DBF' size 10m; 
@@ -464,11 +464,11 @@ ALTER TABLESPACE USERS ADD DATAFILE 'D:\SOFTWARE\ORACLE\PRODUCT\10.2.0\ORADATA\O
 
 ```
 
-### oracle ´´½¨±í¿Õ¼ä
+### oracle åˆ›å»ºè¡¨ç©ºé—´
 
 ```sql
-/*·ÖÎªËÄ²½ */
-/*µÚ1²½£º´´½¨ÁÙÊ±±í¿Õ¼ä  */
+/*åˆ†ä¸ºå››æ­¥ */
+/*ç¬¬1æ­¥ï¼šåˆ›å»ºä¸´æ—¶è¡¨ç©ºé—´  */
 create temporary tablespace user_temp  
 tempfile 'D:\oracle\oradata\Oracle9i\user_temp.dbf' 
 size 50m  
@@ -476,7 +476,7 @@ autoextend on
 next 50m maxsize 20480m  
 extent management local;  
  
-/*µÚ2²½£º´´½¨Êý¾Ý±í¿Õ¼ä  */
+/*ç¬¬2æ­¥ï¼šåˆ›å»ºæ•°æ®è¡¨ç©ºé—´  */
 create tablespace gdsafety  
 logging  
 datafile 'D:\software\oracle\product\10.2.0\oradata\tablespaces\gdsafety.dbf' 
@@ -485,32 +485,32 @@ autoextend on
 next 50m maxsize 20480m  
 extent management local;  
  
-/*µÚ3²½£º´´½¨ÓÃ»§²¢Ö¸¶¨±í¿Õ¼ä  */
+/*ç¬¬3æ­¥ï¼šåˆ›å»ºç”¨æˆ·å¹¶æŒ‡å®šè¡¨ç©ºé—´  */
 create user username identified by password  
 default tablespace user_data  
 temporary tablespace user_temp;  
  
-/*µÚ4²½£º¸øÓÃ»§ÊÚÓèÈ¨ÏÞ  */
+/*ç¬¬4æ­¥ï¼šç»™ç”¨æˆ·æŽˆäºˆæƒé™  */
 grant connect,resource,dba to username;
-/*ÐÞ¸ÄÄ¬ÈÏ±í¿Õ¼ä*/
+/*ä¿®æ”¹é»˜è®¤è¡¨ç©ºé—´*/
 ALTER USER gdsafety default tablespace gdsafety ;  
 
 ```
 
 
-### oracle Êý¾Ý»Ö¸´
+### oracle æ•°æ®æ¢å¤
 
-* ÉÁ»Ø
+* é—ªå›ž
 
 ```sql
 select * from d_pub_reports as of timestamp to_timestamp('2014-01-15 22:50:00','yyyy-mm-dd hh24:mi:ss'); 
---»Ö¸´µ½Ä³¸öÊ±¼äµã
+--æ¢å¤åˆ°æŸä¸ªæ—¶é—´ç‚¹
 flashback table d_pub_reports to timestamp to_timestamp('2014-01-15 22:50:00','yyyy-mm-dd hh24:mi:ss');
---»Ö¸´µ½É¾³ýÇ°
+--æ¢å¤åˆ°åˆ é™¤å‰
 flashback table t_item_system to before drop;
 ```
 
-* »Ö¸´ÊÓÍ¼
+* æ¢å¤è§†å›¾
 
 ```sql
 SELECT *
@@ -522,17 +522,17 @@ SELECT *
 
 ```
 
-### oracle ½ûÓÃÆôÓÃÍâ¼ü
+### oracle ç¦ç”¨å¯ç”¨å¤–é”®
 
-É¾³ý±íÊý¾ÝÊ±£¬Íâ¼üÔ¼Êø£¬ÏÈ½ûÓÃÍâ¼üÔ¼Êø£¬É¾³ýºóÆôÓÃÔ¼Êø
+åˆ é™¤è¡¨æ•°æ®æ—¶ï¼Œå¤–é”®çº¦æŸï¼Œå…ˆç¦ç”¨å¤–é”®çº¦æŸï¼Œåˆ é™¤åŽå¯ç”¨çº¦æŸ
 
 ```sql
 
-/*²éÑ¯Óï¾ä*/
+/*æŸ¥è¯¢è¯­å¥*/
 SELECT * FROM d_pub_org;
 SELECT * FROM d_pub_org@DB237;
 
-/*²éÑ¯±íµÄÖ÷¼ü*/
+/*æŸ¥è¯¢è¡¨çš„ä¸»é”®*/
 SELECT *
   FROM DBA_CONSTRAINTS C
  WHERE 1 = 1
@@ -540,23 +540,23 @@ SELECT *
    AND C.TABLE_NAME = 'D_PUB_ORG'
    AND C.CONSTRAINT_TYPE = 'P';
 AND c.constraint_name LIKE 'FK_T_ORG_%'
-/*¸ù¾Ý±íµÄÖ÷¼üÕÒÍâ¼ü*/
+/*æ ¹æ®è¡¨çš„ä¸»é”®æ‰¾å¤–é”®*/
 SELECT *
   FROM DBA_CONSTRAINTS C
  WHERE 1 = 1
    AND C.R_CONSTRAINT_NAME = 'PK_D_PUB_ORG'
-/*½ûÓÃÍâ¼ü*/
-alter table T_ORG_BASISMESSAGE/*±íÃû*/ disable constraint FK_T_ORG_BA_REFERENCE_D_PUB_OR/*Ô¼ÊøÃû*/;
-alter table T_SAFETY_ATTACH_OTHER/*±íÃû*/ disable constraint FK_T_SAFETY_REFERENCE_D_PUB_OR/*Ô¼ÊøÃû*/;
-/*É¾³ýÊý¾Ý*/
+/*ç¦ç”¨å¤–é”®*/
+alter table T_ORG_BASISMESSAGE/*è¡¨å*/ disable constraint FK_T_ORG_BA_REFERENCE_D_PUB_OR/*çº¦æŸå*/;
+alter table T_SAFETY_ATTACH_OTHER/*è¡¨å*/ disable constraint FK_T_SAFETY_REFERENCE_D_PUB_OR/*çº¦æŸå*/;
+/*åˆ é™¤æ•°æ®*/
 DELETE FROM d_pub_org;
-/*µ¼ÈëÊý¾Ý*/
+/*å¯¼å…¥æ•°æ®*/
 INSERT INTO d_pub_org SELECT * FROM d_pub_org@DB237;
-/*ÆôÓÃÔ¼Êø*/
-alter table T_ORG_BASISMESSAGE/*±íÃû*/ ENABLE constraint FK_T_ORG_BA_REFERENCE_D_PUB_OR/*Ô¼ÊøÃû*/ ;
-alter table T_SAFETY_ATTACH_OTHER/*±íÃû*/ ENABLE constraint FK_T_SAFETY_REFERENCE_D_PUB_OR/*Ô¼ÊøÃû*/;
+/*å¯ç”¨çº¦æŸ*/
+alter table T_ORG_BASISMESSAGE/*è¡¨å*/ ENABLE constraint FK_T_ORG_BA_REFERENCE_D_PUB_OR/*çº¦æŸå*/ ;
+alter table T_SAFETY_ATTACH_OTHER/*è¡¨å*/ ENABLE constraint FK_T_SAFETY_REFERENCE_D_PUB_OR/*çº¦æŸå*/;
 
-/*¸ù¾Ý±íÃûÕÒ×Ó±í*/
+/*æ ¹æ®è¡¨åæ‰¾å­è¡¨*/
 SELECT TABLE_NAME
   FROM DBA_CONSTRAINTS C
  WHERE 1 = 1
@@ -570,31 +570,31 @@ SELECT TABLE_NAME
 
 ```
 
-### oracle Í¬²½±íºÍÊÓÍ¼
+### oracle åŒæ­¥è¡¨å’Œè§†å›¾
 
 ```sql
 
---1.ÆÕÍ¨±í
-drop table T_YX_FWGDL_CHECK; /*ÈÓµô±í*/
-create table T_PRO_UNIT_STATUSBB as select * from T_PRO_UNIT_STATUSBB@Gdsafetyah_237;/*Í¬²½±í*/
---2.ÊÓÍ¼
+--1.æ™®é€šè¡¨
+drop table T_YX_FWGDL_CHECK; /*æ‰”æŽ‰è¡¨*/
+create table T_PRO_UNIT_STATUSBB as select * from T_PRO_UNIT_STATUSBB@Gdsafetyah_237;/*åŒæ­¥è¡¨*/
+--2.è§†å›¾
 select 'create view ' || view_name || ' as', text
   from dba_views@gdsafetyah_237
  where view_name = 'V_PUB_CAPACITY_VALUE'
    and owner = 'GDSAFETYAH';
---3.´ølongÀàÐÍµÄ±íµÄÍ¬²½
+--3.å¸¦longç±»åž‹çš„è¡¨çš„åŒæ­¥
 
 Declare
 CURSOR bcur
  IS select TIME_ID,BYCONTEN1 from T_PRO_UNIT_STATUSBB@Gdsafetyah_237;
   brec bcur%ROWTYPE;
  BEGIN
- insert into T_PRO_UNIT_STATUSBB(TIME_ID,content,Byconten) select TIME_ID,content,Byconten from T_PRO_UNIT_STATUSBB@Gdsafetyah_237;/*ÆäËüÀàÐÍÏÈ²åÈë*/
+ insert into T_PRO_UNIT_STATUSBB(TIME_ID,content,Byconten) select TIME_ID,content,Byconten from T_PRO_UNIT_STATUSBB@Gdsafetyah_237;/*å…¶å®ƒç±»åž‹å…ˆæ’å…¥*/
  OPEN bcur;
  LOOP
  FETCH bcur INTO brec;
  EXIT WHEN bcur%NOTFOUND;
- update T_PRO_UNIT_STATUSBB set BYCONTEN1=brec.BYCONTEN1 where TIME_ID=brec.TIME_ID;/*¸ù¾Ýid¸üÐÂlong×Ö¶Î*/
+ update T_PRO_UNIT_STATUSBB set BYCONTEN1=brec.BYCONTEN1 where TIME_ID=brec.TIME_ID;/*æ ¹æ®idæ›´æ–°longå­—æ®µ*/
  END LOOP;
  CLOSE bcur;
  END;
