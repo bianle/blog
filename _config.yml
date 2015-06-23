@@ -117,7 +117,7 @@ disqus:
 
 username: bianle
 baseurl:
-basedir: /blog
+basedir: blog
 markdown: redcarpet
 safe: false
 highlighter: pygments
