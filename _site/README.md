@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# blog
-=======
 StrayBirds
 ==========
 
@@ -121,4 +118,3 @@ Thanks to authors of the themes:
 * [kunka](https://github.com/pizn/kunka), Licence: MIT, author: [zhanxin.info](http://www.zhanxin.info/)
 
 All the themes are intergrated in the blog template, with some modifies.
->>>>>>> gh-pages
