@@ -21,9 +21,9 @@ Org mode 是 emacs 中的一个主模式。 Org 是 organization 的缩写。这
 
 很简单，一级标题用一个星号（*）表示，二级标题用两个星号表示，三级标题用三个星号表示，以此类推，注意，星号必须顶格写。比如，新建一个文件，在 emacs 中打开，然后敲：<kbd>M-x org-mode</kbd>，进入 org mode。然后，在文件中写入下面的内容：
 
->\* top level
->\*\* the second level
->\*\*\* the third level
+>* top level
+>** the secondlevel
+>*** the third level
 >somethings to write
 
 _注意，星号前不能有空格。_
