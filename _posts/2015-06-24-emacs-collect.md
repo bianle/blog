@@ -18,10 +18,10 @@ Org mode 是 emacs 中的一个主模式。 Org 是 organization 的缩写。这
 2. 基本用法
 很简单，一级标题用一个星号（*）表示，二级标题用两个星号表示，三级标题用三个星号表示，以此类推，注意，星号必须顶格写。比如，新建一个文件，在 emacs 中打开，然后敲：<kbd>M-x org-mode</kbd>，进入 org mode。然后，在文件中写入下面的内容：
 `
- * top level
- ** the second level
- *** the third level
- somethings to write
+\* top level
+\*\* the second level
+\*\*\* the third level
+somethings to write
 `
 注意，星号前不能有空格。
 然后你就可以看到这些各个等级的标题和内容被合适的高亮了。你可以自由的控制这些标题和内容是被折叠还是显示出来，方法就是使用TAB。比如，把光标移动到最开始的地方，连续按TAB, org mode 会把 buffer 中的内容按照 全部折叠->展开所有标题->展开全部内容 这样的顺序循环显示。另外，还有一些快捷键可以帮助你方便的在 org mode 中间移动:
