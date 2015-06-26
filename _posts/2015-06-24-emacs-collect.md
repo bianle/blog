@@ -160,20 +160,20 @@ Org mode 的一个很重要的功能就是写 todo list。 创建一个todo list
 
 todo list 默认只有两种状态： `TODO` 和 `DONE`。我们可以再增加一些其他状态。比如在.emacs中加入下面的语句:
 
-`
+``` lisp
 (setq org-todo-keywords
       '((sequence "TODO" "DOING" "HANGUP" "|" "DONE" "CANCEL")))
-`
+```
 
 可以将 todo list 的状态增加为五种：TODO，DOING，HANGUP，DONE，CANCEL。
 注意，在 HANGUP 和 DONE 之间有一条竖线 “|”，在竖线之前的状态和之后的状态使用的是不同的face。
 
 进一步的，我们还可以记录切换到某一种状态时的时间：
 
-`
+``` lisp
 (setq org-todo-keywords
       '((sequence "TODO(t)" "DOING(i!)" "HANGUP(h!)" "|" "DONE(d!)" "CANCEL(c!)")))
-`
+```
 
 在 `DOING` `HANGUP` `DONE` 和 `CANCEL` 后的括号中都有一个`!`，这种写法表示进入到这些状态后会记录下当前时间。而每个状态后面的括号中都有一个字母，这个字母就是进入该状态的快捷键。当你想切换到某一状态时，可以输入<kbd>C-c C-t</kbd>（此时 emacs 会弹出一个提示窗口），然后输入对应的快捷键就可以把当前的条目设置为该状态。
 
