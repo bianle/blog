@@ -5,6 +5,30 @@ category: java
 comments: false
 ---
 
+### maven
+
+* maven 项目转 eclipse Dynamic Web Project
+1. mvn 转 java项目
+```
+mvn eclipse:eclipse
+```
+
+2. java添加web特性
+
+`Project properties` => `Project Facets`
+点击 `Convert to faceted form`
+选中 `Dynamic Web Module`
+点击 `Further Configuration available` 修改 `content directory` 为 `src\main\webapp`
+
+​3. mvn 管理的 jar 加到部署集
+
+`Project properties` => `Deployment Assembly` => Add => `Java Build Path Entries` 选中M2_REPO，确定
+
+* unbound classpath variable: 'M2REPO/xxx/xxx.jar'
+
+`Eclipse`->`Windows`->`Preferences`->`java`->`Build Path`->`Classpath Variables`
+new 一个，名为`M2_REPO` ，值为 `～/.m2/repository`
+
 ### list 封装成 java bean
 
 原理很简单：人群(list)中每个人依次在该人群中找爹(for嵌套)，找到为止（break）。

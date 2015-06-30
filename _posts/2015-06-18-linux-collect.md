@@ -119,5 +119,32 @@ comments: false
 <kbd>!!</kbd> - 重复上次的命令
 <kbd>exit</kbd> – 注销当前会话
 
+### yakuake
+
+修改yakuake字体
+
+yakuake设置字体只能选择系统自带字体，自定义字体可通过修改配置文件实现
+
+打开配置文件 （`xxx`为对应配置方案名）：
+
+```
+vi ～/.kde/share/apps/konsole/xxx.profile
+```
+
+修改`Font=Fantasque Sans Mono,11,-1,5,50,0,0,0,0,0`一句。
+
+>[Appearance]  
+>AntiAliasFonts=true  
+>ColorScheme=GreenOnBlack  
+>Font=Fantasque Sans Mono,11,-1,5,50,0,0,0,0,0  
+
+>[General]  
+>Environment=TERM=xterm  
+>LocalTabTitleFormat=%d : %n  
+>Name=xterm  
+>Parent=FALLBACK/  
+
+
 ### zsh
 
+ 
