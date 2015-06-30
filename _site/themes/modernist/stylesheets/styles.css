@@ -234,11 +234,17 @@ img {
 
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+<<<<<<< HEAD
+  color: #333;
+=======
   color: #336699;
+>>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
   font-size: 12px;
   overflow-x: auto;
 }
 
+<<<<<<< HEAD
+=======
 /*added by bl*/
 kbd{
     display: inline-block;
@@ -253,6 +259,7 @@ kbd{
     border-radius: 3px;
     box-shadow: inset 0 -1px 0 #bbb;
 }
+>>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
 pre {
   padding: 20px;
   background: #3A3C42;
