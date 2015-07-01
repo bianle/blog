@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>知無涯</title>
+
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
+    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1><a href="/">知無涯</a></h1>
+        <p>生有涯，知無涯</p>
+        <ul>
+          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> db 收集 
+        </h1>
+
+    <h2>MySQL 5.5版本下my.ini内[mysqld]项中不能再写default-character-set=utf8</h2>
+
+<p>原来在5.1版本时，为了解决中文乱码问题设置默认字符集为utf8时，在my.ini内的 [mysql] 和 [mysqld] 项中都是写： </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">default-character-set=utf8  
+</code></pre></div>
+<p>到了5.5版本， [mysql] 项内可以这么写， [mysqld] 项内不能再这么写了，而是必须写：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">character-set-server=utf8  
+</code></pre></div>
+<p>否则在启动MySQL服务时会有1067错误。</p>
+
+<p>目前已知5.1和5.5有这么一个不同之处，且是从5.5的安装版本自动生成的my.ini文件中看出的。配置免安装的5.5版本还需要进一步的实验。 </p>
+
+
+      </section>
+      
+      <section class="comments">
+        
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/db/2015/06/27/db-collect" data-title="db 收集" data-url="http://2le.me//db/2015/06/27/db-collect.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+        
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
+
