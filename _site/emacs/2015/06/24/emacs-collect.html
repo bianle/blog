@@ -71,7 +71,7 @@ somethings to write  </p>
 <li>列表</li>
 </ul>
 
-<p>在同一个子标题下，你还可以将内容划分的更细致。方法是使用这些符号： ‘-’， ‘+’， ‘<em>’， ‘1.’， ‘1)’。注意，这里的’</em>&#39;不能顶格写。 比如，在你的 org mode 的 buffer 中写入下面这些文字（从 org mode 手册上抄来的例子）：</p>
+<p>在同一个子标题下，你还可以将内容划分的更细致。方法是使用这些符号： ‘-’， ‘+’， ‘*’， ‘1.’， ‘1)’。注意，这里的’*&#39;不能顶格写。 比如，在你的 org mode 的 buffer 中写入下面这些文字（从 org mode 手册上抄来的例子）：</p>
 
 <blockquote>
 <p>My favorite scenes are (in this order)<br>
@@ -245,39 +245,45 @@ The Org homepage[fn:orghome] now looks a lot better than it used to.</p>
 
 <p>实际上 org mode 提供的功能极其繁多。我在上面列出的只是我日常会用到的功能。 Org mode 还有很多我这篇文章中完全没有涉及的功能，而我涉及到的功能，也有许多细微的技巧没有提及。幸运的是， org mode 有一份极其详尽的文档。你可以在 emacs 中输入 <kbd>C-h i</kbd>，然后搜索 <code>org mode</code>，找到该文档。想充分发挥出 org mode 的威力，需要仔细阅读这份文档。</p>
 
+<h2>emacs 打开文件乱码</h2>
+
+<p>尝试修改文件编码
+<kbd>M-x revert-buffer-with-coding-system RET</kbd>
+输入编码如<code>chinese-gkb</code><kbd>RET</kbd>
+保存时指定编码
+<kbd>M-x set-buffer-file-coding-system RET</kbd>
+输入编码如<code>utf-8</code><kbd>RET</kbd></p>
+
+<p>设置默认编码</p>
+<div class="highlight"><pre><code class="language-lisp" data-lang="lisp"><span class="p">(</span><span class="nv">set-language-environment</span> <span class="s">&quot;UTF-8&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">set-terminal-coding-system</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">set-keyboard-coding-system</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">set-clipboard-coding-system</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">set-buffer-file-coding-system</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">set-selection-coding-system</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">modify-coding-system-alist</span> <span class="ss">&#39;process</span> <span class="s">&quot;*&quot;</span> <span class="ss">&#39;utf-8</span><span class="p">)</span>
+</code></pre></div>
 
       </section>
       
       <section class="comments">
         
-          <a id="toggleComment" href="javascript:void(0);" onclick="showComment()">展开评论&gt;&gt;</a>
-<script>
-function showComment(){
-    document.getElementById('disqus_thread').style.display='block';
-    document.getElementById('toggleComment').innerHTML="&lt;&lt;收起评论";
-    document.getElementById('toggleComment').setAttribute("onclick","hideComment()");
-}
-function hideComment(){
-    document.getElementById('disqus_thread').style.display='none';
-    document.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
-    document.getElementById('toggleComment').setAttribute("onclick","showComment()");
-}
-</script>
-<div id="disqus_thread" style="display:none;"></div>
- <script type="text/javascript">
-     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-     var disqus_shortname = 'bianle'; // required: replace example with your forum shortname
-
-     /* * * DON'T EDIT BELOW THIS LINE * * */
-     (function () {
-         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-     })();
- </script>
- <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a style="display:none"  href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/emacs/2015/06/24/emacs-collect" data-title="emacs 收集" data-url="http://2le.me//emacs/2015/06/24/emacs-collect.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
         
       </section>

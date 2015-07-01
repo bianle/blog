@@ -28,7 +28,37 @@
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> java 收集 
         </h1>
 
-    <h3>list 封装成 java bean</h3>
+    <h3>maven</h3>
+
+<ul>
+<li>maven 项目转 eclipse Dynamic Web Project</li>
+<li>mvn 转 java项目
+<code>
+mvn eclipse:eclipse
+</code></li>
+</ul>
+
+<ol>
+<li>java添加web特性</li>
+</ol>
+
+<p><code>Project properties</code> =&gt; <code>Project Facets</code>
+点击 <code>Convert to faceted form</code>
+选中 <code>Dynamic Web Module</code>
+点击 <code>Further Configuration available</code> 修改 <code>content directory</code> 为 <code>src\main\webapp</code></p>
+
+<p>​3. mvn 管理的 jar 加到部署集</p>
+
+<p><code>Project properties</code> =&gt; <code>Deployment Assembly</code> =&gt; Add =&gt; <code>Java Build Path Entries</code> 选中M2_REPO，确定</p>
+
+<ul>
+<li>unbound classpath variable: &#39;M2REPO/xxx/xxx.jar&#39;</li>
+</ul>
+
+<p><code>Eclipse</code>-&gt;<code>Windows</code>-&gt;<code>Preferences</code>-&gt;<code>java</code>-&gt;<code>Build Path</code>-&gt;<code>Classpath Variables</code>
+new 一个，名为<code>M2_REPO</code> ，值为 <code>～/.m2/repository</code></p>
+
+<h3>list 封装成 java bean</h3>
 
 <p>原理很简单：人群(list)中每个人依次在该人群中找爹(for嵌套)，找到为止（break）。</p>
 
@@ -145,34 +175,22 @@
       
       <section class="comments">
         
-          <a id="toggleComment" href="javascript:void(0);" onclick="showComment()">展开评论&gt;&gt;</a>
-<script>
-function showComment(){
-    document.getElementById('disqus_thread').style.display='block';
-    document.getElementById('toggleComment').innerHTML="&lt;&lt;收起评论";
-    document.getElementById('toggleComment').setAttribute("onclick","hideComment()");
-}
-function hideComment(){
-    document.getElementById('disqus_thread').style.display='none';
-    document.getElementById('toggleComment').innerHTML="展开评论&gt;&gt;";
-    document.getElementById('toggleComment').setAttribute("onclick","showComment()");
-}
-</script>
-<div id="disqus_thread" style="display:none;"></div>
- <script type="text/javascript">
-     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-     var disqus_shortname = 'bianle'; // required: replace example with your forum shortname
-
-     /* * * DON'T EDIT BELOW THIS LINE * * */
-     (function () {
-         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-     })();
- </script>
- <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a style="display:none"  href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/java/2015/06/18/java-collect" data-title="java 收集" data-url="http://2le.me//java/2015/06/18/java-collect.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
         
       </section>
