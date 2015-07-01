@@ -1,11 +1,11 @@
 ---
 layout: post
-title: python ÊÕ¼¯
+title: python æ”¶é›†
 category: python
 comments: false
 ---
 
-## PythonµÄ50¸öÄ£¿é£¬Âú×ãÄã¸÷ÖÖĞèÒª
+## Pythonçš„50ä¸ªæ¨¡å—ï¼Œæ»¡è¶³ä½ å„ç§éœ€è¦
 
 Graphical interface wxPython http://wxpython.org   
 Graphical interface pyGtk http://www.pygtk.org   
