@@ -116,12 +116,8 @@ disqus:
 #################################### global configure #######################################
 
 username: bianle
-<<<<<<< HEAD
-baseurl: /blog
-=======
 baseurl:
 basedir: blog
->>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
 markdown: redcarpet
 safe: false
 highlighter: pygments
@@ -130,8 +126,5 @@ description: 生有涯，知無涯
 theme: modernist
 disqusname: bianle
 # theme can be: hack, leap-day, merlot, midnight, minimal, modernist, slate, time-machine, kunka
-<<<<<<< HEAD
 # those themes are all come from GitHub Pages Themes
-=======
-# those themes are all come from GitHub Pages Themes
->>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
+
