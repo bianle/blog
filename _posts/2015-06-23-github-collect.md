@@ -48,3 +48,8 @@ sudo gem install rdiscount
 3. `mv tmp/.git . # 将tmp下.git目录移到当前目录 `  
 4. `rmdir tmp`  
 5. `git reset --hard HEAD`  
+
+## git
+### 修改远程仓库
+
+` git remote set-url --push [name] [newUrl]`
