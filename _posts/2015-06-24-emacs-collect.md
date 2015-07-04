@@ -11,6 +11,11 @@ comments: false
 2. 删除 ~/.emacs文件
 3. 重启 emacs
 
+## emacs 替换
+
+<kbd>M-% RET</kbd> 输入被替换的词如`trunk`<kbd>RET</kbd>输入要替换的词如`dotfiles`
+<kbd>RET</kbd>,按<kbd>y</kbd>替换并跳到下一个词，按<kbd>n</kbd>不替换跳到下个词。
+
 ## emacs 的 org-mode
 
 * 介绍
