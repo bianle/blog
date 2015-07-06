@@ -39,6 +39,12 @@ a:hover
 color: #000;
 }
 
+code{
+    border:1px solid #fff;
+    padding:0 3px 0 3px ;
+    font-size:1em;
+}
+
 .main, .container > header
 {
 width: 90%;
