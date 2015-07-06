@@ -61,7 +61,7 @@ sudo gem install rdiscount
 ```
 touch .git-credentials
 vim .git-credentials
-htts:*username*:*password*@github.com
+https://**username**:**password**@github.com
 ```
 
 2. 终端下执行命令
