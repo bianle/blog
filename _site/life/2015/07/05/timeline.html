@@ -9,9 +9,7 @@
 <div id="source" style="display:none;">
 <h2>2015-07-06 13:16:47</h2>
 
-<p>起点</p>
-
-<h2>2015-07-06 14:18:21</h2>
+<h3>开始</h3>
 
 <p>时间轴上线</p>
 
@@ -34,7 +32,9 @@ $(document).ready(function(){
         time = time.substr(0,16);
         var time1 = time.substr(0,10);
         var time2 = time.substr(11,5);
-        var cont = $(this).next().text();
+        var cont = $(this).nextAll("p").first().html();
+        var tit = $(this).next("h3").html();
+        tit = tit||"";
         //alert(time+" "+ cont);
 
         $li = $("<li>"+
@@ -43,13 +43,13 @@ $(document).ready(function(){
 "<div class=\"cbp_tmicon cbp_tmicon-phone\">"+
 "</div>"+
 "<div class=\"cbp_tmlabel\">"+
-"<h2></h2>"+
+"<h2>"+tit+"</h2>"+
 "<p>"+
 cont+
 "</p>"+
 "</div>"+
 "</li>");
-        $ul.append($li);
+        $ul.prepend($li);
     });
 });
 </script>
