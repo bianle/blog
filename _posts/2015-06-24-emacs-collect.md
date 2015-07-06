@@ -218,3 +218,7 @@ todo list 默认只有两种状态： `TODO` 和 `DONE`。我们可以再增加�
 ## emacs 末行去空格
 
 whitespace-cleanup-mode
+
+## emacs html
+
+预览: <kbd>C-c C-v</kbd>

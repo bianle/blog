@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 # blog
-<<<<<<< HEAD
-=======
->>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
-StrayBirds
 ==========
 
 基于 GitHub Pages 搭建的极简博客，所有操作都可以直接通过浏览器完成。
@@ -125,10 +118,13 @@ Thanks to authors of the themes:
 * [kunka](https://github.com/pizn/kunka), Licence: MIT, author: [zhanxin.info](http://www.zhanxin.info/)
 
 All the themes are intergrated in the blog template, with some modifies.
-<<<<<<< HEAD
-=======
->>>>>>> gh-pages
+
 =======
 [blog](http://2le.me "bianle's blog")
->>>>>>> f32295b1c6603fd7c114b97020a1d1d85df30647
->>>>>>> ada366d4222f72e3789e1b59471fb12a866ddfd4
+
+
+| 项目        | 价格   |  数量  |
+| --------   | -----:  | :----:  |
+| 计算机     | \$1600 |   5     |
+| 手机        |   \$12   |   12   |
+| 管线        |    \$1    |  234  |

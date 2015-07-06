@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+<script type="text/javascript" src="/common/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/common/css/timeline.css" />
+</head>
+<body>
+<div id="source" style="display:none;">
+<h2>2015-07-06 13:16:47</h2>
+
+<p>小狼</p>
+
+</div>
+
+<div class="container">
+<div class="main">
+<ul class="cbp_tmtimeline">
+
+</ul>
+</div>
+</div>
+
+</body>
+<script>
+$(document).ready(function(){
+    var $ul = $(".cbp_tmtimeline");
+    $("#source").find("h2").each(function(){
+        var time = $(this).text();
+        time = time.substr(0,16);
+        var time1 = time.substr(0,10);
+        var time2 = time.substr(11,5);
+        var cont = $(this).next().text();
+        //alert(time+" "+ cont);
+
+        $li = $("<li>"+
+"<time class=\"cbp_tmtime\" datetime=\""+time+"\">"+
+"<span>"+time1+"</span> <span>"+time2+"</span></time>"+
+"<div class=\"cbp_tmicon cbp_tmicon-phone\">"+
+"</div>"+
+"<div class=\"cbp_tmlabel\">"+
+"<h2></h2>"+
+"<p>"+
+cont+
+"</p>"+
+"</div>"+
+"</li>");
+        $ul.append($li);
+    });
+});
+</script>
+</html>

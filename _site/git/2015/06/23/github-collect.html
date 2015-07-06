@@ -69,6 +69,35 @@ sudo gem install rdiscount
 <li><code>git reset --hard HEAD</code><br></li>
 </ol>
 
+<h2>git</h2>
+
+<h3>修改远程仓库</h3>
+
+<p><code>git remote set-url --push [name] [newUrl]</code></p>
+
+<h3>默认用户名密码</h3>
+
+<ol>
+<li>~/下</li>
+</ol>
+<div class="highlight"><pre><code class="language-text" data-lang="text">touch .git-credentials
+vim .git-credentials
+https://**username**:**password**@github.com
+</code></pre></div>
+<ol>
+<li>终端下执行命令</li>
+</ol>
+<div class="highlight"><pre><code class="language-text" data-lang="text">git config --global credential.helper store
+</code></pre></div>
+<ol>
+<li>~/.gitconfig文件下多了一项</li>
+</ol>
+
+<blockquote>
+<p>[credential]<br>
+ helper=store</p>
+</blockquote>
+
 
       </section>
       
