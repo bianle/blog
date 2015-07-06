@@ -53,3 +53,25 @@ sudo gem install rdiscount
 ### 修改远程仓库
 
 ` git remote set-url --push [name] [newUrl]`
+
+### 默认用户名密码
+
+1. ~/下
+
+```
+touch .git-credentials
+vim .git-credentials
+htts:*username*:*password*@github.com
+```
+
+2. 终端下执行命令
+
+```
+git config --global credential.helper store
+```
+
+3. ~/.gitconfig文件下多了一项
+
+>[credential]
+>  helper=store
+
