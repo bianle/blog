@@ -72,6 +72,6 @@ git config --global credential.helper store
 
 3. ~/.gitconfig文件下多了一项
 
->[credential]
+>[credential]  
 >  helper=store
 
