@@ -9,9 +9,13 @@
 <script src="/common/js/codemirror/mode/javascript/javascript.js"></script>
 <script src="/common/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <script type="text/javascript" src="/common/js/jquery.js"></script>
+<style>
+
+</style>
 </head>
 <body>
-<div id="hiddenDiv" style="display:none;"><h3>js 扩展方法</h3>
+  <div id="src" style="">
+     <h3>js 扩展方法</h3>
 
 <ul>
 <li>startWith , endWith</li>
@@ -242,34 +246,31 @@ a(c);
 &lt;/body&gt;
 
 &lt;/html&gt;
-</code></pre></div></div>
-<div id="codeAreas">
-
-</div>
-
-
-
+</code></pre></div>
+  </div>
 </body>
 <script>
 
   var cms = new Array();
 
  $(".highlight").each(function(index){
-     $("#codeAreas").append($("<textarea id='codeArea"+index+"'><textarea>"));
-     $("#codeArea"+index).html($(this).find("code").html());
+     var $codediv = $("<div id='codediv"+index+"'><div>");
+     var $codeArea = $("<textarea width='400' id='codeArea"+index+"'><textarea>");
+     $codediv.html($codeArea);
+     $codeArea.html($(this).find("code").html());
+     $codediv.append("<input type=\"button\" onclick=\"runCode("+index+")\" value=\"运行\"></input>");
+     $(this).replaceWith($codediv);
+
      var obj = CodeMirror.fromTextArea(document.getElementById("codeArea"+index),{
       lineNumbers: true,
       mode: "htmlmixed"
      });
      cms.push(obj);
-     $("#codeAreas").append("<input type=\"button\" onclick=\"runCode("+index+")\" value=\"运行\"></input>");
  });
 
-
+//$("#src").show();
 
  function runCode(ind){
-    //alert(myCodeMirror.doc.getValue());
-
     var winname = window.open('', "_blank", '');
     var content =cms[ind].doc.getValue();
     winname.document.open('text/html', 'replace');
