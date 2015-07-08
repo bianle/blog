@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+<script src="/common/js/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="/common/js/codemirror/lib/codemirror.css">
+<script src="/common/js/codemirror/mode/xml/xml.js"></script>
+<script src="/common/js/codemirror/mode/css/css.js"></script>
+<script src="/common/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/common/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="/common/js/jquery.js"></script>
+</head>
+<body>
+<div id="hiddenDiv" style="display:none;">{{content}}</div>
+<div id="codeAreas">
+
+</div>
+
+
+
+</body>
+<script>
+
+  var cms = new Array();
+
+ $(".highlight").each(function(index){
+     $("#codeAreas").append($("<textarea id='codeArea"+index+"'><textarea>"));
+     $("#codeArea"+index).html($(this).find("code").html());
+     var obj = CodeMirror.fromTextArea(document.getElementById("codeArea"+index),{
+      lineNumbers: true,
+      mode: "htmlmixed"
+     });
+     cms.push(obj);
+     $("#codeAreas").append("<input type=\"button\" onclick=\"runCode("+index+")\" value=\"运行\"></input>");
+ });
+
+
+
+ function runCode(ind){
+    //alert(myCodeMirror.doc.getValue());
+
+    var winname = window.open('', "_blank", '');
+    var content =cms[ind].doc.getValue();
+    winname.document.open('text/html', 'replace');
+    winname.opener = null
+    winname.document.writeln(content);
+    winname.document.close();
+ }
+
+
+</script>
+</html>

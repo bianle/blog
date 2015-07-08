@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: html
 title: js代码收集
 category: html
 comments: false
@@ -8,7 +8,7 @@ comments: false
 ### js 扩展方法
 * startWith , endWith
 
-```js
+```
 String.prototype.endWith=function(s){
   if(s==null||s==""||this.length==0||s.length>this.length)
      return false;
@@ -32,7 +32,7 @@ String.prototype.startWith=function(s){
 
 * trim ltrim rtrim
 
-```js
+```
 String.prototype.trim=function(){
 　　return this.replace(/(^\s*)|(\s*$)/g, "");
 }
@@ -45,7 +45,7 @@ String.prototype.rtrim=function(){
 ```
 
 ### js setTimeout
-```html
+```
 <script>
         function doTimer(btnId,timeId,delayTimes){
 

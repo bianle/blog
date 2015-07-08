@@ -1,125 +1,283 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>知無涯</title>
-
-    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
-    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
-    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-      <h1><a href="/">知無涯</a></h1>
-        <p>生有涯，知無涯</p>
-        <ul>
-          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> js代码收集 
-        </h1>
-
-    <h3>js 扩展方法</h3>
+<head>
+<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+<script src="/common/js/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="/common/js/codemirror/lib/codemirror.css">
+<script src="/common/js/codemirror/mode/xml/xml.js"></script>
+<script src="/common/js/codemirror/mode/css/css.js"></script>
+<script src="/common/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/common/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="/common/js/jquery.js"></script>
+</head>
+<body>
+<div id="hiddenDiv" style="display:none;"><h3>js 扩展方法</h3>
 
 <ul>
 <li>startWith , endWith</li>
 </ul>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">endWith</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">){</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">s</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="nx">s</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="o">||</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">==</span><span class="mi">0</span><span class="o">||</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
-     <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-  <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">==</span><span class="nx">s</span><span class="p">)</span>
-     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-  <span class="k">else</span>
-     <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
- <span class="p">}</span>
+<div class="highlight"><pre><code class="language-text" data-lang="text">String.prototype.endWith=function(s){
+  if(s==null||s==&quot;&quot;||this.length==0||s.length&gt;this.length)
+     return false;
+  if(this.substring(this.length-s.length)==s)
+     return true;
+  else
+     return false;
+  return true;
+ }
 
-<span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startWith</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">){</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">s</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="nx">s</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="o">||</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">==</span><span class="mi">0</span><span class="o">||</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
-   <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-  <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">==</span><span class="nx">s</span><span class="p">)</span>
-     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-  <span class="k">else</span>
-     <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
- <span class="p">}</span>
+String.prototype.startWith=function(s){
+  if(s==null||s==&quot;&quot;||this.length==0||s.length&gt;this.length)
+   return false;
+  if(this.substr(0,s.length)==s)
+     return true;
+  else
+     return false;
+  return true;
+ }
 </code></pre></div>
 <ul>
 <li>trim ltrim rtrim</li>
 </ul>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">trim</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
-<span class="err">　　</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(^\s*)|(\s*$)/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">ltrim</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
-<span class="err">　　</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(^\s*)/g</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">rtrim</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
-<span class="err">　　</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(\s*$)/g</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight"><pre><code class="language-text" data-lang="text">String.prototype.trim=function(){
+　　return this.replace(/(^\s*)|(\s*$)/g, &quot;&quot;);
+}
+String.prototype.ltrim=function(){
+　　return this.replace(/(^\s*)/g,&quot;&quot;);
+}
+String.prototype.rtrim=function(){
+　　return this.replace(/(\s*$)/g,&quot;&quot;);
+}
 </code></pre></div>
 <h3>js setTimeout</h3>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
-        <span class="kd">function</span> <span class="nx">doTimer</span><span class="p">(</span><span class="nx">btnId</span><span class="p">,</span><span class="nx">timeId</span><span class="p">,</span><span class="nx">delayTimes</span><span class="p">){</span>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;script&gt;
+        function doTimer(btnId,timeId,delayTimes){
 
-                <span class="kd">var</span> <span class="nx">delayBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">btnId</span><span class="p">);</span>
-                <span class="kd">var</span> <span class="nx">hideTime</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">timeId</span><span class="p">);</span>
-                <span class="k">if</span><span class="p">(</span><span class="nx">hideTime</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">*</span><span class="mi">1</span><span class="o">==</span><span class="mi">1</span><span class="p">){</span>
-                        <span class="nx">delayBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="o">=</span><span class="kc">false</span><span class="p">;</span>
-                        <span class="nx">delayBtn</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;获取短信验证码&quot;</span><span class="p">;</span>
-                        <span class="nx">hideTime</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">delayTimes</span><span class="p">;</span>
-                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-                        <span class="nx">delayBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
-                        <span class="nx">hideTime</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="p">(</span><span class="nx">hideTime</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">*</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-                        <span class="nx">delayBtn</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span><span class="nx">hideTime</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+</span><span class="s2">&quot; 秒后获取短信验证码&quot;</span><span class="p">;</span>
-                        <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;doTimer(&#39;&quot;</span><span class="o">+</span><span class="nx">btnId</span><span class="o">+</span><span class="s2">&quot;&#39;,&#39;&quot;</span><span class="o">+</span><span class="nx">timeId</span><span class="o">+</span><span class="s2">&quot;&#39;,&#39;&quot;</span><span class="o">+</span><span class="nx">delayTimes</span><span class="o">+</span><span class="s2">&quot;&#39;)&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
-                <span class="p">}</span>
+                var delayBtn = document.getElementById(btnId);
+                var hideTime = document.getElementById(timeId);
+                if(hideTime.innerHTML*1==1){
+                        delayBtn.disabled=false;
+                        delayBtn.value = &quot;获取短信验证码&quot;;
+                        hideTime.innerHTML = delayTimes;
+                }else{
+                        delayBtn.disabled=true;
+                        hideTime.innerHTML = (hideTime.innerHTML*1-1);
+                        delayBtn.value =hideTime.innerHTML +&quot; 秒后获取短信验证码&quot;;
+                        window.setTimeout(&quot;doTimer(&#39;&quot;+btnId+&quot;&#39;,&#39;&quot;+timeId+&quot;&#39;,&#39;&quot;+delayTimes+&quot;&#39;)&quot;,1000);
+                }
 
-        <span class="p">}</span>
-<span class="nt">&lt;/script&gt;</span>
-<span class="c">&lt;!-- 三个参数 1、ID为delayTime的隐藏DIV；2、ID为delayBtn的button；3、隐藏DIV的innerHTML 20秒 --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;delayTime&quot;</span> <span class="na">style=</span><span class="s">&quot;display:none;&quot;</span><span class="nt">&gt;</span>20<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">id=</span><span class="s">&quot;delayBtn&quot;</span> <span class="na">style=</span><span class="s">&quot;width:180px;&quot;</span> <span class="na">onclick=</span><span class="s">&quot;doTimer(&#39;delayBtn&#39;,&#39;delayTime&#39;,&#39;20&#39;);&quot;</span> <span class="na">value=</span><span class="s">&quot;获取短信验证码&quot;</span><span class="nt">&gt;&lt;/input&gt;</span>
+        }
+&lt;/script&gt;
+&lt;!-- 三个参数 1、ID为delayTime的隐藏DIV；2、ID为delayBtn的button；3、隐藏DIV的innerHTML 20秒 --&gt;
+&lt;div id=&quot;delayTime&quot; style=&quot;display:none;&quot;&gt;20&lt;/div&gt;
+&lt;input type=&quot;button&quot; id=&quot;delayBtn&quot; style=&quot;width:180px;&quot; onclick=&quot;doTimer(&#39;delayBtn&#39;,&#39;delayTime&#39;,&#39;20&#39;);&quot; value=&quot;获取短信验证码&quot;&gt;&lt;/input&gt;
 </code></pre></div>
+<h3>js call</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;script&gt;
 
-      </section>
-      
-      <section class="comments">
-        
-          <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/html/2015/06/12/js-collect" data-title="js代码收集" data-url="http://2le.me//html/2015/06/12/js-collect.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"2le"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
+function MyObj(){  }
 
-        
-      </section>
-    </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+MyObj.prototype.myMethod = function(){
+
+alert(this);
+
+}
+
+function test(){
+
+new MyObj().myMethod(1);
+
+MyObj.prototype.myMethod(1);
+
+MyObj.prototype.myMethod.call(1);
+
+}
+
+&lt;/script&gt;
+</code></pre></div>
+<p>结果</p>
+
+<blockquote>
+<p>[object Object]
+[object Object]
+1</p>
+</blockquote>
+
+<h3>js 拖动</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;html xmlns=&quot;&lt;a href=&quot;http://www.w3.org/1999/xhtml&quot;&gt;http://www.w3.org/1999/xhtml&lt;/a&gt;&quot;&gt;
+
+&lt;head runat=&quot;server&quot;&gt;
+
+&lt;title&gt;&lt;/title&gt;
+
+&lt;script language=javascript&gt;
+
+var intX;
+
+var intY;
+
+var blnDrag = false; //鼠标是否已经按下
+
+//鼠标按下
+
+function MouseDown(event,id) {
+
+//鼠标按下
+
+blnDrag = true;
+
+intX = event.clientX - GetDiv(id).style.pixelLeft;
+
+intY = event.clientY - GetDiv(id).style.pixelTop;
+
+}
+
+//鼠标拖动
+
+function DragDiv(event,id) {
+
+//判断鼠标是否已经按下
+
+if (!blnDrag) {
+
+return false;
+
+}
+
+else {
+
+GetDiv(id).style.pixelLeft = event.clientX - intX;
+
+GetDiv(id).style.pixelTop = event.clientY - intY;
+
+}
+
+}
+
+//鼠标松开时
+
+function mouseUp() {
+
+//鼠标没有按下
+
+blnDrag = false;
+
+}
+
+//得到DIV
+
+function GetDiv(id) {
+
+return document.getElementById(id);
+
+}
+
+&lt;/script&gt;
+
+&lt;/head&gt;
+
+&lt;body &gt;
+
+&lt;form id=&quot;form1&quot; runat=&quot;server&quot;&gt;
+
+&lt;div id=&quot;div1&quot; style=&quot;CURSOR: move; POSITION: absolute;  WIDTH: 140px; HEIGHT: 112px; background-color:Red&quot;     onmousemove=&quot;DragDiv(event,this.id)&quot;     onmousedown=&quot;MouseDown(event,this.id)&quot;     onmouseup=&quot;mouseUp()&quot;&gt;&lt;/div&gt;
+
+&lt;/form&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre></div>
+<h3>js 回调函数</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;title&gt;回调函数(callback)&lt;/title&gt;
+
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function a(callback)  {
+
+alert(&quot;我是parent函数a！&quot;);
+
+alert(&quot;调用回调函数&quot;);
+
+callback();
+
+}
+
+function b(){
+
+alert(&quot;我是回调函数b&quot;);
+
+}
+
+function c(){
+
+alert(&quot;我是回调函数c&quot;);
+
+}
+
+function test()  {
+
+a(b);
+
+a(c);
+
+}
+
+&lt;/script&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;学习js回调函数&lt;/h1&gt;
+
+&lt;button onClick=test()&gt;click me&lt;/button&gt;
+
+&lt;p&gt;应该能看到调用了两个回调函数&lt;/p&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre></div></div>
+<div id="codeAreas">
+
+</div>
+
+
+
+</body>
+<script>
+
+  var cms = new Array();
+
+ $(".highlight").each(function(index){
+     $("#codeAreas").append($("<textarea id='codeArea"+index+"'><textarea>"));
+     $("#codeArea"+index).html($(this).find("code").html());
+     var obj = CodeMirror.fromTextArea(document.getElementById("codeArea"+index),{
+      lineNumbers: true,
+      mode: "htmlmixed"
+     });
+     cms.push(obj);
+     $("#codeAreas").append("<input type=\"button\" onclick=\"runCode("+index+")\" value=\"运行\"></input>");
+ });
+
+
+
+ function runCode(ind){
+    //alert(myCodeMirror.doc.getValue());
+
+    var winname = window.open('', "_blank", '');
+    var content =cms[ind].doc.getValue();
+    winname.document.open('text/html', 'replace');
+    winname.opener = null
+    winname.document.writeln(content);
+    winname.document.close();
+ }
+
+
+</script>
 </html>
-
