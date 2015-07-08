@@ -5,6 +5,129 @@ category: python
 comments: false
 ---
 
+## Python SQLite
+
+```
+\#!/usr/bin/env python
+\# -*- coding: utf-8 -*-
+
+\#导入日志及SQLite3模块
+import logging
+import logging.config
+import sqlite3
+
+\#日志配置文件名
+LOG_FILENAME = 'logging.conf'
+
+\#日志语句提示信息
+LOG_CONTENT_NAME = 'sqlite_log'
+
+\#SQLite数据库名称
+DB_SQLITE_PATH = ".\db\sqlite_pytest.db"
+
+def log_init(log_config_filename, logname):
+    '''
+    Function:日志模块初始化函数
+    Input：log_config_filename:日志配置文件名
+           lognmae:每条日志前的提示语句
+    Output: logger
+    author: socrates
+    date:2012-02-11
+    '''
+    logging.config.fileConfig(log_config_filename)
+    logger = logging.getLogger(logname)
+    return logger
+
+def operate_sqlite3_tbl_product():
+    '''
+    Function:操作SQLITE3数据库函数
+    Input：NONE
+    Output: NONE
+    author: socrates
+    date:2012-02-11
+    '''
+    sqlite_logger.debug("operate_sqlite3_tbl_product enter...")
+   
+    #连接数据库 
+    try:
+        sqlite_conn = sqlite3.connect(DB_SQLITE_PATH)
+    except sqlite3.Error, e:
+         print 'conntect sqlite database failed.'
+         sqlite_logger.error("conntect sqlite database failed, ret = %s" % e.args[0])   
+         return
+    
+    sqlite_logger.info("conntect sqlite database(%s) succ." % DB_SQLITE_PATH)
+    
+    #获取游标
+    sqlite_cursor = sqlite_conn.cursor()
+   
+    #删除表
+    sql_desc2 = "DROP TABLE IF EXISTS tbl_product3;"
+    try:
+        sqlite_cursor.execute(sql_desc2)
+    except sqlite3.Error, e:
+         print 'drop table failed'
+         sqlite_logger.error("drop table failed, ret = %s" % e.args[0])
+         sqlite_cursor.close()
+         sqlite_conn.close()     
+         return
+    sqlite_conn.commit()   
+   
+    sqlite_logger.info("drop table(tbl_product3) succ.")
+   
+    #建表
+    sql_desc = '''CREATE TABLE tbl_product3(
+    i_index INTEGER PRIMARY KEY,
+    sv_productname VARCHAR(32)
+    );'''
+    try:
+        sqlite_cursor.execute(sql_desc)
+    except sqlite3.Error, e:
+         print 'drop table failed.'
+         sqlite_logger.error("drop table failed, ret = %s" % e.args[0])
+         sqlite_cursor.close()
+         sqlite_conn.close()   
+         return
+    sqlite_conn.commit()
+   
+    sqlite_logger.info("create table(tbl_product3) succ.")
+   
+    #插入记录
+    sql_desc = "INSERT INTO tbl_product3(sv_productname) values('apple')"
+    try:
+        sqlite_cursor.execute(sql_desc)
+    except sqlite3.Error, e:
+        print 'insert record failed.'
+        sqlite_logger.error("insert record failed, ret = %s" % e.args[0]) 
+        sqlite_cursor.close()
+        sqlite_conn.close()   
+        return
+    sqlite_conn.commit()
+   
+    sqlite_logger.info("insert record into table(tbl_product3) succ.")
+   
+    #查询记录
+    sql_desc = "SELECT * FROM tbl_product3;"
+    sqlite_cursor.execute(sql_desc)
+    for row in sqlite_cursor:
+        print row
+        sqlite_logger.info("%s", row)
+   
+    #关闭游标和数据库句柄   
+    sqlite_cursor.close()
+    sqlite_conn.close()
+   
+    sqlite_logger.debug("operate_sqlite3_tbl_product leaving...")
+
+if __name__ == '__main__':
+   
+    #初始化日志系统
+    sqlite_logger = log_init(LOG_FILENAME, LOG_CONTENT_NAME)  
+   
+    #操作数据库
+    operate_sqlite3_tbl_product()
+```
+
 ## Python的50个模块，满足你各种需要
 
 Graphical interface wxPython http://wxpython.org   
