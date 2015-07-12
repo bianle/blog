@@ -21,7 +21,7 @@ comments: false
 
 ```
 #For Microsoft SQL Server connections
-connectionString=jdbc:JSQLConnect://<i>localhost:1433</i>/sdk/applicationName=IBM_C8_CM
+connectionString=jdbc:JSQLConnect://localhost:1433/sdk/applicationName=IBM_C8_CM
 driverClass=com.jnetdirect.jsql.JSQLDriver
 username=sa
 password=apple
@@ -56,13 +56,13 @@ singleSignon=false
 
 ## Java Provider Jar文件
 
-将CAM_AAA_JDBCSample.jar拷贝到Cognos_Home\webapps\p2pd\WEB-INF\lib下面。
+将`CAM_AAA_JDBCSample.jar`拷贝到`Cognos_Home\webapps\p2pd\WEB-INF\lib`下面。
 
 ## 创建表
 
-使用脚本dbInit_sqlserver.sql创建sqlserver数据库的表和视图；
-使用脚本dbInit_db2.sql创建db2数据库的表和视图；
-使用脚本dbInit_oracle.sql创建oracle数据库的表和视图。
+使用脚本`dbInit_sqlserver.sql`创建sqlserver数据库的表和视图；
+使用脚本`dbInit_db2.sql`创建db2数据库的表和视图；
+使用脚本`dbInit_oracle.sql`创建oracle数据库的表和视图。
 
 ## 插入数据
 
@@ -72,10 +72,10 @@ singleSignon=false
 
 ## 配置cognos configuration
 
-1. 打开cognos configuration，选中“身份验证”点击右键选择“新建资源->名称空间”
+1. 打开`cognos configuration`，选中`身份验证`点击右键选择`新建资源`->`名称空间`
  
-2. 类型选择“自定义java程序”。在“名称空间标识符”处填写“Sample1”，注意此处必须填写Sampe1，这个名字与配置文件JDBC_Config_Sample1.properties名字中的Sample1是对应的。在“Java类名称”处填写“JDBCSample”，将是否允许匿名访问设置为否。
+2. 类型选择`自定义java程序`。在`名称空间标识符`处填写`Sample1`，注意此处必须填写`Sampe1`，这个名字与配置文件`JDBC_Config_Sample1.properties`名字中的`Sample1`是对应的。在`Java类名称`处填写`JDBCSample`，将是否允许匿名访问设置为否。
 3. 保存配置，重启cognos 。
-4. 登陆cognos connection ，即可看到设置的名称空间Sample1
+4. 登陆`cognos connection` ，即可看到设置的名称空间`Sample1`
 
 
