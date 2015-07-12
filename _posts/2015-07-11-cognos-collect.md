@@ -19,27 +19,25 @@ comments: false
 
 * Sqlserver
 
-```
-#For Microsoft SQL Server connections
-connectionString=jdbc:JSQLConnect://*localhost:1433*/sdk/applicationName=IBM_C8_CM
-driverClass=com.jnetdirect.jsql.JSQLDriver
-username=sa
-password=apple
-singleSignon=false
-```
+>#For Microsoft SQL Server connections
+>connectionString=jdbc:JSQLConnect://*localhost:1433*/sdk/applicationName=IBM_C8_CM
+>driverClass=com.jnetdirect.jsql.JSQLDriver
+>username=sa
+>password=apple
+>singleSignon=false
+
 
 根据实际数据库的IP、端口号、数据库标识、用户名和密码进行修改。
 
 * DB2
 
-```
-# For DB2 connections
-connectionString=jdbc:db2://localhost:50000/COGNOS:retrieveMessagesFromServerOnGetMessage=true;fullyMaterializeLobData=false;
-driverClass=com.ibm.db2.jcc.DB2Driver
-username=cognos
-password=cognos
-singleSignon=false
-```
+># For DB2 connections
+>connectionString=jdbc:db2://localhost:50000/COGNOS:retrieveMessagesFromServerOnGetMessage=true;fullyMaterializeLobData=false;
+>driverClass=com.ibm.db2.jcc.DB2Driver
+>username=cognos
+>password=cognos
+>singleSignon=false
+
 根据实际数据库的IP、端口号、数据库标识、用户名和密码进行修改。
 
 * oracle
