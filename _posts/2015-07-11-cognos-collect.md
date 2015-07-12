@@ -11,7 +11,7 @@ comments: false
 
 ## 驱动
 
-测试数据库的版本分别为Sqlserver 2005，db2 V9.7，oracle 10g，Sqlserver、db2和oracle所对应的的驱动分别为sqljdbc4.jar、db2jcc.jar、ojdbc14.jar，请根据实际数据库的版本下载相应的数据库驱动。根据数据库的类型选择相应驱动，并将驱动拷贝到Cognos_Home\webapps\p2pd\WEB-INF\lib下面。
+测试数据库的版本分别为Sqlserver 2005，db2 V9.7，oracle 10g，Sqlserver、db2和oracle所对应的的驱动分别为`sqljdbc4.jar`、`db2jcc.jar`、`ojdbc14.jar`，请根据实际数据库的版本下载相应的数据库驱动。根据数据库的类型选择相应驱动，并将驱动拷贝到`Cognos_Home\webapps\p2pd\WEB-INF\lib`下面。
 
 ## 配置文件
 
@@ -21,7 +21,7 @@ comments: false
 
 ```
 #For Microsoft SQL Server connections
-connectionString=jdbc:JSQLConnect://localhost:1433/sdk/applicationName=IBM_C8_CM
+connectionString=jdbc:JSQLConnect://*localhost:1433*/sdk/applicationName=IBM_C8_CM
 driverClass=com.jnetdirect.jsql.JSQLDriver
 username=sa
 password=apple
