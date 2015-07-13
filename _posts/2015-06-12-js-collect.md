@@ -9,6 +9,7 @@ comments: false
 * startWith , endWith
 
 ```
+<script>
 String.prototype.endWith=function(s){
   if(s==null||s==""||this.length==0||s.length>this.length)
      return false;
@@ -28,11 +29,19 @@ String.prototype.startWith=function(s){
      return false;
   return true;
  }
+
+alert("ssss".startWith("ss"));
+
+</script>
+
+
+
 ```
 
 * trim ltrim rtrim
 
 ```
+<script>
 String.prototype.trim=function(){
 　　return this.replace(/(^\s*)|(\s*$)/g, "");
 }
@@ -42,6 +51,8 @@ String.prototype.ltrim=function(){
 String.prototype.rtrim=function(){
 　　return this.replace(/(\s*$)/g,"");
 }
+alert("result:=="+"  12  ".ltrim()+"==");
+</script>
 ```
 
 ### js setTimeout

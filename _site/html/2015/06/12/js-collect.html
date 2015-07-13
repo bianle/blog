@@ -4,23 +4,85 @@
 <meta http-equiv=Content-Type content="text/html;charset=utf-8">
 <script src="/common/js/codemirror/lib/codemirror.js"></script>
 <link rel="stylesheet" href="/common/js/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="/common/js/codemirror/addon/display/fullscreen.css">
+<link rel="stylesheet" href="/common/js/codemirror/addon/dialog/dialog.css">
+<link rel="stylesheet" href="/common/js/codemirror/addon/search/matchesonscrollbar.css">
 <script src="/common/js/codemirror/mode/xml/xml.js"></script>
 <script src="/common/js/codemirror/mode/css/css.js"></script>
 <script src="/common/js/codemirror/mode/javascript/javascript.js"></script>
 <script src="/common/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="/common/js/codemirror/addon/display/fullscreen.js"></script>
+<script src="/common/js/codemirror/addon/dialog/dialog.js"></script>
+<script src="/common/js/codemirror/addon/search/searchcursor.js"></script>
+<script src="/common/js/codemirror/addon/search/search.js"></script>
+<script src="/common/js/codemirror/addon/scroll/annotatescrollbar.js"></script>
+<script src="/common/js/codemirror/addon/search/matchesonscrollbar.js"></script>
+
 <script type="text/javascript" src="/common/js/jquery.js"></script>
 <style>
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{background:#fff;-webkit-text-size-adjust:100%;}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
 
+
+body{
+background:#f8f8f8;
+}
+
+.head-title{
+text-align:center;
+padding:10px;
+}
+
+h3{
+border-left:5px solid #ccc;
+padding-left:5px;
+margin:5px 0;
+}
+
+.CodeMirror { height: auto; border: 1px solid #ddd; }
+.toolBtn{
+position:absolute;
+right:5px;
+top:5px;
+z-index:25;
+}
+.codeDiv{
+position: relative;
+margin: 1em 0;
+
+}
+#src{
+max-width:700px;
+background:#ffffff;
+padding : 10px 20px 10px 20px;
+margin:0 auto;
+}
+footer{
+margin:10px auto;
+text-align:center;
+}
 </style>
 </head>
 <body>
+  <div class="head-title">
+    <h1>js代码收集</h1>
+    <p>2015-06-12</p>
+  </div>
   <div id="src" style="">
      <h3>js 扩展方法</h3>
 
 <ul>
 <li>startWith , endWith</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">String.prototype.endWith=function(s){
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;script&gt;
+String.prototype.endWith=function(s){
   if(s==null||s==&quot;&quot;||this.length==0||s.length&gt;this.length)
      return false;
   if(this.substring(this.length-s.length)==s)
@@ -39,11 +101,16 @@ String.prototype.startWith=function(s){
      return false;
   return true;
  }
+
+alert(&quot;ssss&quot;.startWith(&quot;ss&quot;));
+
+&lt;/script&gt;
 </code></pre></div>
 <ul>
 <li>trim ltrim rtrim</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">String.prototype.trim=function(){
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;script&gt;
+String.prototype.trim=function(){
 　　return this.replace(/(^\s*)|(\s*$)/g, &quot;&quot;);
 }
 String.prototype.ltrim=function(){
@@ -52,6 +119,8 @@ String.prototype.ltrim=function(){
 String.prototype.rtrim=function(){
 　　return this.replace(/(\s*$)/g,&quot;&quot;);
 }
+alert(&quot;result:==&quot;+&quot;  12  &quot;.ltrim()+&quot;==&quot;);
+&lt;/script&gt;
 </code></pre></div>
 <h3>js setTimeout</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text">&lt;script&gt;
@@ -248,22 +317,36 @@ a(c);
 &lt;/html&gt;
 </code></pre></div>
   </div>
+   <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/bianle">bianle</a></p>
+    </footer>
 </body>
 <script>
 
   var cms = new Array();
 
  $(".highlight").each(function(index){
-     var $codediv = $("<div id='codediv"+index+"'><div>");
+     var $codediv = $("<div id='codediv"+index+"' class=\"codeDiv\" ><div>");
      var $codeArea = $("<textarea width='400' id='codeArea"+index+"'><textarea>");
      $codediv.html($codeArea);
      $codeArea.html($(this).find("code").html());
-     $codediv.append("<input type=\"button\" onclick=\"runCode("+index+")\" value=\"运行\"></input>");
+     $codediv.append("<input type=\"button\" class=\"toolBtn\"  onclick=\"runCode("+index+")\" value=\"运行\"></input>");
      $(this).replaceWith($codediv);
 
      var obj = CodeMirror.fromTextArea(document.getElementById("codeArea"+index),{
       lineNumbers: true,
-      mode: "htmlmixed"
+      mode: "htmlmixed",
+      lineWrapping: true,
+      //theme: "night",
+      extraKeys: {
+        "F11": function(cm) {
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        }
+      }
      });
      cms.push(obj);
  });
@@ -271,11 +354,11 @@ a(c);
 //$("#src").show();
 
  function runCode(ind){
-    var winname = window.open('', "_blank", '');
+    var winname = window.open('', "", '');
     var content =cms[ind].doc.getValue();
     winname.document.open('text/html', 'replace');
     winname.opener = null
-    winname.document.writeln(content);
+    winname.document.writeln("<title>preview</title>"+content);
     winname.document.close();
  }
 
