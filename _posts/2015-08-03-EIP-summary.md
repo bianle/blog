@@ -1,3 +1,10 @@
+---
+layout: post
+title: EIP总结
+category: work
+comments: false
+---
+
 # portal bug修改
 ## portal 在本地测试机上springcurity报异常
 解决：
@@ -13,13 +20,6 @@
 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，新分支[portal_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
 ## 菜单查询逻辑优化
 ## 其他SQL修改
----
-layout: post
-title: EIP总结
-category: work
-comments: false
----
-
 
 # portal 需求变更
 
