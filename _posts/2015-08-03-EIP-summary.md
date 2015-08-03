@@ -9,12 +9,14 @@ comments: false
 ## portal 在本地测试机上springcurity报异常
 解决：
 修改`web.xml`文件,将`classpath:`改为`/WEB-INF/classes/`
+
 ```
 <context-param>
 	  <param-name>contextConfigLocation</param-name>
 	  <param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
  </context-param>
 ```
+
 # portal 优化
 ## 将portal源代码加入svn库
 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，新分支[portal_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
@@ -41,18 +43,22 @@ comments: false
 **注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`**
 如下:
 `applicationContext-security-basic.xml`片段：
+
 ```
 <!-- 指标字典开放 -->
  <s:intercept-url pattern="/system/indicator/indicatorList.action"  filters="none" /> 
  <s:intercept-url pattern="/system/indicator/getIndicatorListPub.action"  filters="none" /> 
  <s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action"  filters="none" />
 ```
+
 `struts-standardization.xml`片段：
+
 ```
 <action name="indicatorList" class="indicatorAction" method="indicatorList">
 	  <result name="success">/pages/standardization/indicator/list1.jsp</result>
  </action>
 ```
+
 + 标准化指标字典隐藏已禁用指标
 
 ## cognos 集成
