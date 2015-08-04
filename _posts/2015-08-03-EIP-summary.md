@@ -56,7 +56,7 @@ comments: false
 ```
 <action name="indicatorList" class="indicatorAction" method="indicatorList">
 	  <result name="success">/pages/standardization/indicator/list1.jsp</result>
- </action>
+</action>
 ```
 
 + 标准化指标字典隐藏已禁用指标
