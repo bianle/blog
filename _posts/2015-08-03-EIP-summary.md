@@ -64,9 +64,9 @@ comments: false
 
 ```
 <!-- 指标字典开放 -->
-<s:intercept-url pattern="/system/indicator/indicatorList.action"  filters="none" /> 
-<s:intercept-url pattern="/system/indicator/getIndicatorListPub.action"  filters="none" /> 
-<s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action"  filters="none" />
+<s:intercept-url pattern="/system/indicator/indicatorList.action" filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getIndicatorListPub.action" filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action" filters="none" />
 ```
 
 `struts-standardization.xml`片段：
