@@ -81,14 +81,14 @@ comments: false
 # portal 后续工作
 ## 日常运维
 ### 指标导出
-参考sql文件[导出指标信息](sql/导出指标信息.txt)和合并User的java脚本[XlsReader.java](java/XlsReader.java)
+参考sql文件[导出指标信息](/atts/sql/导出指标信息.txt)和合并User的java脚本[XlsReader.java](/atts/java/XlsReader.java)
 
 ##cognos报表上传到oa资源库
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
-调度流程参考[离线调度](2015-08-05-report-dispatch.html)
+调度流程参考[离线调度](report-dispatch.html)
 
 ## 了解websphere集群
-新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](2015-0805-was-cluster.html)
+新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](/java/08/05/was-cluster.html)
 
 ## cognos集成
 + cognos登录存在跨域安全性问题
