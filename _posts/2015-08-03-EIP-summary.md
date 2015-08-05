@@ -18,10 +18,23 @@ comments: false
 
 # portal 优化
 ## 将portal源代码加入svn库
-原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，新分支[portal_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
+原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:
++ [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
++ [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305)
++ [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305)
 ## 菜单查询逻辑优化
-## 其他SQL修改
+###增加3个视图：
++ `V_SYS_R_ROLE_RIGHT`角色权限关联视图
++ `V_SYS_RIGHT`权限视图（整合了菜单和报表）
++ `V_SYS_RIGHT_TREE`权限树
+###修改查询逻辑由循环遍历查询改为一次查询
 
+## 其他sql修改
++ delete语句
+`delete from TABLE where 1=1 and (...)`
+改为
+`delete from TABLE where 1=0 or (...)`
+建议逻辑删除慎用物理删除
 
 
 # portal 需求变更
@@ -41,7 +54,7 @@ comments: false
 
 ## OA指标字典
 + 指标字典改为和portal一套程序，同数据库  
-**注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`**
+<font size=1>__注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`__</font>
 如下:
 `applicationContext-security-basic.xml`片段：
 
