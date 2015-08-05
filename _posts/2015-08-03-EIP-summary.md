@@ -54,7 +54,7 @@ comments: false
 
 ## OA指标字典
 + 指标字典改为和portal一套程序，同数据库  
-<font size=1>__注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`__</font>
+<font size=1>_注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`_</font>
 如下:
 `applicationContext-security-basic.xml`片段：
 
