@@ -7,9 +7,10 @@ comments: false
 
 #调度流程
 
-+ cube刷新完后向`T_DATA_SOURCE`表插入数据触发器`TR_DS_REPORT_UPDATE`被触发将`T_REPORT_DISPATCHINFO`表中刷新成功的报表状态(`EXECUTE_FLAG`)置为可执行(1)
++ 每天凌晨`T_REPORT_DISPATCHINFO`表报表状态(`EXECUTE_FLAG`)初始化为(0)
++ cube刷新完后向portal数据库`T_DATA_SOURCE`表插入数据，触发器`TR_DS_REPORT_UPDATE`被触发，将`T_REPORT_DISPATCHINFO`表中刷新成功的报表状态(`EXECUTE_FLAG`)置为可执行(1)
 
-`TR_DS_REPORT_UPDATE`
+`TR_DS_REPORT_UPDATE`内容：  
 
 ```
 CREATE OR REPLACE TRIGGER "PORTAL"."TR_DS_REPORT_UPDATE"
@@ -55,12 +56,8 @@ rsh tk-cognos -l tomcat /home/tomcat/shellSchedule/shellSchedule.sh
 /usr/java6/bin/java -jar /home/tomcat/shellSchedule/shellSchedule.jar >> /home/tomcat/shellSchedule/shellSchedule.log
 ```
 
-+ `shellSchedule.jar`调用`ReportDispatch`发布的webservice接口`http://10.129.80.4:8098/ReportDispatch/services/reportUpdateService`中的`shellUpdateReportInfo`服务
++ `shellSchedule.jar`调用`ReportDispatch`发布的webservice接口`http://10.129.80.4:8098/ReportDispatch/services/reportUpdateService`中的`shellUpdateReportInfo`服务(webservice接口配置在ShellSchedule中webservice.properties中配置)
 
-+ `shellUpdateReportInfo`查询`T_REPORT_DISPATCHINFO`表查询执行状态为可执行的(EXECUTE_FLAG=1)导出报表并上传到OA服务器
++ `shellUpdateReportInfo`查询`T_REPORT_DISPATCHINFO`表查询执行状态为可执行的(EXECUTE_FLAG=1)导出报表并上传到OA服务器（上传配置文件在ReportDispatch中exportReport.properties中设置，数据库连接配置文件在db2Jdbc.properties中设置）
 
 
-
-#其他
-+ 日志文件有点大可以将最新的日志截取另存为新文件
-`tail -200000 catalina.out > catalina.tail200000.out`

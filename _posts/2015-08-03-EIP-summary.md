@@ -21,9 +21,9 @@ comments: false
 ## 将portal源代码加入svn库
 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:
 
-+ [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
-+ [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305)
-+ [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305)
++ [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305) portal主程序，web应用
++ [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305) 报表调度主程序，web应用
++ [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305) 报表调度脚本，jar应用
 
 ## 菜单查询逻辑优化
 
@@ -35,11 +35,12 @@ comments: false
 ###修改查询逻辑由循环遍历查询改为一次查询
 
 ## 其他sql修改
-+ delete语句
-`delete from TABLE where 1=1 and (...)`
-改为
-`delete from TABLE where 1=0 or (...)`
-建议逻辑删除慎用物理删除
++ delete语句  
+`delete from TABLE where 1=1 [and (...)]`
+改为  
+`delete from TABLE where 1=0 [or (...)]`
+
+建议逻辑删除,慎用物理删除
 
 ---
 # portal 需求变更
@@ -117,6 +118,11 @@ __调度流程参考[离线调度](report-dispatch.html)__
 - 网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件
 - ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问
 - http,80.4开放对log日志文件夹的web访问权限
+
+---
+#其他
++ 日志文件有点大可以将最新的日志截取另存为新文件  
+`tail -200000 catalina.out > catalina.tail200000.out`
 
 
 
