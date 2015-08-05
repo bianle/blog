@@ -50,7 +50,7 @@ comments: false
 + 顶部菜单只显示一级
 
 ## 标准化管理模块
-+ [x]新增指标改成不需要申请单也可以新增
++ 新增指标改成不需要申请单也可以新增
 + 新增维度做成不选择申请单可以新增
 + 指标信息加入KPI分类
 + 流程申请中返回按钮回到历史页面
@@ -104,7 +104,7 @@ comments: false
 调度流程参考[离线调度](report-dispatch.html)
 
 ## 了解websphere集群
-新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)
+新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)__
 
 ## cognos集成
 + cognos登录存在跨域安全性问题
