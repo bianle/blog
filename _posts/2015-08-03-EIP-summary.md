@@ -88,7 +88,7 @@ comments: false
 调度流程参考[离线调度](report-dispatch.html)
 
 ## 了解websphere集群
-新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](/java/08/05/was-cluster.html)
+新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)
 
 ## cognos集成
 + cognos登录存在跨域安全性问题
