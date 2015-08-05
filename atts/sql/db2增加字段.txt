@@ -1,0 +1,1 @@
+alter table t_sys_dept_code add column DEPT_BI_CODE2 varchar(10) null

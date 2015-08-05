@@ -4,7 +4,6 @@ title: EIP总结
 category: work
 comments: false
 ---
-
 # portal bug修改
 ## portal 在本地测试机上springcurity报异常
 解决：
@@ -14,7 +13,7 @@ comments: false
 <context-param>
 	  <param-name>contextConfigLocation</param-name>
 	  <param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
- </context-param>
+</context-param>
 ```
 
 # portal 优化
@@ -22,6 +21,8 @@ comments: false
 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，新分支[portal_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
 ## 菜单查询逻辑优化
 ## 其他SQL修改
+
+
 
 # portal 需求变更
 
@@ -46,16 +47,16 @@ comments: false
 
 ```
 <!-- 指标字典开放 -->
- <s:intercept-url pattern="/system/indicator/indicatorList.action"  filters="none" /> 
- <s:intercept-url pattern="/system/indicator/getIndicatorListPub.action"  filters="none" /> 
- <s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action"  filters="none" />
+<s:intercept-url pattern="/system/indicator/indicatorList.action"  filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getIndicatorListPub.action"  filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action"  filters="none" />
 ```
 
 `struts-standardization.xml`片段：
 
 ```
 <action name="indicatorList" class="indicatorAction" method="indicatorList">
-	  <result name="success">/pages/standardization/indicator/list1.jsp</result>
+    <result name="success">/pages/standardization/indicator/list1.jsp</result>
 </action>
 ```
 
@@ -77,20 +78,31 @@ comments: false
 
 
 
-# portal 日常工作
-## 指标导出
-整理有sql文件和合并User的java脚本
+# portal 后续工作
+## 日常运维
+### 指标导出
+参考sql文件[导出指标信息](sql/导出指标信息.txt)和合并User的java脚本[XlsReader.java](java/XlsReader.java)
 
 ##cognos报表上传到oa资源库
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
+调度流程参考[离线调度](2015-08-05-report-dispatch.html)
 
 ## 了解websphere集群
-新生产环境为websphere集群，需要了解集群基本部署操作
+新生产环境为websphere集群，需要了解集群配置和基本部署操作参考[portal集群安装](2015-0805-was-cluster.html)
 
 ## cognos集成
 + cognos登录存在跨域安全性问题
 + 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
-+ 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护` 
++ 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
+
+##cognos监控日志改进
+`CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
+
+- 网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件
+- ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问
+- http,80.4开放对log日志文件夹的web访问权限
+
+
 
 
 

@@ -1,0 +1,368 @@
+--1、新建指标临时表
+create table PORTAL.T_INDICATOR_TMP as (select * from  PORTAL.T_INDICATOR)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_INDICATOR_TMP;
+alter table  PORTAL.T_INDICATOR_TMP drop materialized query;
+
+--T_INDICATOR_TMP 未指标临时表，用于缓存修改后的指标
+select * from T_INDICATOR_TMP
+
+--drop table PORTAL.T_INDICATOR_MOD_REC
+--创建表，存放修改原始记录
+
+CREATE
+    TABLE PORTAL.T_INDICATOR_MOD_REC
+    (
+        ID INTEGER NOT NULL,
+        NAME VARCHAR(100),
+        LV  VARCHAR(10),
+        THEME1  VARCHAR(50),
+        THEME2  VARCHAR(50),
+        OWNER VARCHAR(50),
+        DEFD  VARCHAR(1000),
+        FMLA VARCHAR(5000),
+        REMARKS VARCHAR(1000),
+        ALIAS VARCHAR(100),
+        USERS VARCHAR(500),
+        MEAS VARCHAR(10),
+        FREQ VARCHAR(10),
+        is_New varchar(10)
+    )
+
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    t.indicator_name IN
+    (
+        SELECT
+            t1.name
+        FROM
+            t_indicator_mod_rec t1
+    )
+AND t.isdelete = 0
+AND t.indicator_enabled= 1 ;
+--(426 rows)
+SELECT DISTINCT
+    indicator_name
+FROM
+    t_indicator_tmp t
+WHERE
+    t.indicator_name IN
+    (
+        SELECT
+            t1.name
+        FROM
+            t_indicator_mod_rec t1
+    );
+--(426 rows)
+
+--更新公式列
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t1.fmla <> t.formula_explain
+    )
+    and t.indicator_enabled= 1 ;
+--(191 rows)
+
+update
+    t_indicator_tmp t
+set t.formula_explain = 
+(select fmla from t_indicator_mod_rec t2 where t2.name = t.indicator_name)
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t1.fmla <> t.formula_explain
+    )
+    and t.indicator_enabled= 1 ;
+--(190 rows updated)
+
+--更新定义列
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t1.defd <> t.indicator_definition
+    )
+    and t.indicator_enabled= 1 ;
+--(162 rows)
+
+update
+    t_indicator_tmp t
+set t.indicator_definition = 
+(select defd from t_indicator_mod_rec t2 where t2.name = t.indicator_name)
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t1.defd <> t.indicator_definition
+    )
+    and t.indicator_enabled= 1 ;
+--(162 rows updated)
+
+--更新指标级别
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t.INDICATOR_LEVEL <> CASE
+        WHEN t1.lv = '公司级'
+        THEN '1'
+        ELSE '0'
+    END 
+    )
+    and t.indicator_enabled= 1 ;
+--(1 row)
+
+update
+    t_indicator_tmp t
+set t.INDICATOR_LEVEL = 
+(select  CASE
+        WHEN t2.lv = '公司级'
+        THEN '1'
+        ELSE '0'
+    END  from t_indicator_mod_rec t2 where t2.name = t.indicator_name)
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name = t.indicator_name
+        AND t.INDICATOR_LEVEL <> CASE
+        WHEN t1.lv = '公司级'
+        THEN '1'
+        ELSE '0'
+    END 
+    )
+    and t.indicator_enabled= 1 ;
+--(1 row updated)
+
+
+--更新指标名
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.defd = t.indicator_definition
+        AND t1.name <> t.indicator_name
+    )
+    and t.indicator_enabled= 1 ;
+--(9 rows)
+update
+    t_indicator_tmp t
+set t.indicator_name = 
+(select name from t_indicator_mod_rec t2 where t2.defd = t.indicator_definition)
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1
+        WHERE
+            t1.name <> t.indicator_name
+        AND t1.defd = t.indicator_definition
+    )
+    and t.indicator_enabled= 1 ;
+--(9 rows updated)
+
+
+
+--********************  修改了指标名的指标
+select t.*,tmp.name from 
+(
+--要修改的指标
+SELECT
+    t.INDICATOR_NAME ,
+    CASE
+        WHEN t.INDICATOR_LEVEL = '1'
+        THEN '公司级'
+        ELSE '部门级'
+    END indicator_level,
+
+    t2.THEME_NAME,
+    t3.theme_name sub_theme_name,
+
+    d.DEPT_NAME,
+
+
+    t.INDICATOR_DEFINITION,
+    t.FORMULA_EXPLAIN,
+t.REMARK,
+t.SYNONYM_NAME,
+--d2.dept_name u_dept_name,
+--t.COMPUTE_UNIT,
+--t.COMPUTE_FREQUENCY,
+opt.option_value,
+opt2.option_value
+FROM
+    PORTAL.T_INDICATOR_TMP t
+JOIN PORTAL.T_BASE_THEME t2
+ON
+    t2.id = t.THEME
+JOIN T_Base_theme t3
+ON
+    t3.id = t.subtheme
+JOIN T_BASE_STANDARD_DEPT d
+ON
+    d.id = t.OWNER_DEPT
+--join PORTAL.T_INDICATOR_USER u
+--on u.INDICATOR_CODE = t.INDICATOR_CODE
+--and u.VERSION_NUM = t.VERSION_NUM
+--join PORTAL.T_BASE_STANDARD_DEPT d2
+--on d2.ID = u.DEPT_ID
+join t_sys_option opt 
+on opt.option_type_code = 'COMPUTE_UNIT'
+and opt.option_type_id = t.COMPUTE_UNIT
+join t_sys_option opt2 
+on opt2.option_type_code = 'COMPUTE_FREQUENCY'
+and opt2.option_type_id = t.COMPUTE_FREQUENCY
+where 1=1
+and t2.theme_name not in('运营管理','客户管理','其他','其它')
+and t.indicator_enabled= 1 
+ORDER BY
+    t2.id,
+    t3.id,
+    t.INDICATOR_NAME 
+)
+t 
+left join t_indicator_mod_rec tmp on t.INDICATOR_DEFINITION = tmp.defd
+where t.indicator_name not in 
+(
+select name from t_indicator_mod_rec
+)
+
+--营销部均实动人力 --> 营业部均实动人力
+select * from t_indicator_tmp t where t.INDICATOR_NAME = '营销部均实动人力'
+update t_indicator_tmp t set t.INDICATOR_NAME = '营业部均实动人力' where t.INDICATOR_NAME = '营销部均实动人力'
+--首年直接佣金 --首年直接佣金(FYC)
+update t_indicator_tmp t set t.INDICATOR_NAME = '首年直接佣金(FYC)' where t.INDICATOR_NAME = '首年直接佣金'
+--新开发产品数量 --新上市产品数量
+update t_indicator_tmp t set t.INDICATOR_NAME = '新上市产品数量' where t.INDICATOR_NAME = '新开发产品数量'
+--再保前赔付率 --短期健康险/意外险再保前赔付率
+update t_indicator_tmp t set t.INDICATOR_NAME = '短期健康险/意外险再保前赔付率' where t.INDICATOR_NAME = '再保前赔付率'
+--再保后赔付率 --短期健康险/意外险再保后赔付率
+update t_indicator_tmp t set t.INDICATOR_NAME = '短期健康险/意外险再保后赔付率' where t.INDICATOR_NAME = '再保后赔付率'
+--基本法成本占比 --电销基本法成本占比
+update t_indicator_tmp t set t.INDICATOR_NAME = '电销基本法成本占比' where t.INDICATOR_NAME = '基本法成本占比'
+--营销组均人力 --营业组均人力
+update t_indicator_tmp t set t.INDICATOR_NAME = '营业组均人力' where t.INDICATOR_NAME = '营销组均人力'
+--营销组均NP人力 --营业组均NP人力
+update t_indicator_tmp t set t.INDICATOR_NAME = '营业组均NP人力' where t.INDICATOR_NAME = '营销组均NP人力'
+--营销部均FYC --营业部均FYC
+update t_indicator_tmp t set t.INDICATOR_NAME = '营业部均FYC' where t.INDICATOR_NAME = '营销部均FYC'
+--营销部均组数 --营业部均组数
+update t_indicator_tmp t set t.INDICATOR_NAME = '营业部均组数' where t.INDICATOR_NAME = '营销部均组数'
+--通印金额占比 --统印金额占比
+update t_indicator_tmp t set t.INDICATOR_NAME = '统印金额占比' where t.INDICATOR_NAME = '通印金额占比'
+--直接销售费用执行率 --直接销售费用
+update t_indicator_tmp t set t.INDICATOR_NAME = '直接销售费用' where t.INDICATOR_NAME = '直接销售费用执行率'
+--网上保单客户数 --线上保单客户数
+update t_indicator_tmp t set t.INDICATOR_NAME = '线上保单客户数' where t.INDICATOR_NAME = '网上保单客户数'
+
+
+--综合退保率   银保大个险保费
+--            外勤招聘费用
+--            件均银保大个险保费
+--            件均APE保费（禁用）
+
+
+--重复 根据名修改其他列
+
+select * from t_indicator_mod_rec t
+where t.name not in ( 
+select t.INDICATOR_NAME from t_indicator_tmp t
+ )
+and t.is_new <> '新增'
+--********************  
+
+
+
+
+--禁用
+select * from t_indicator_tmp t where t.indicator_name in 
+(
+select name from t_indicator_mod_rec t1 where t1.remarks like '禁用'
+)
+
+update t_indicator_tmp t set t.indicator_enabled = 2 where t.indicator_name in
+(
+select name from t_indicator_mod_rec t1 where t1.remarks like '禁用'
+)
+
+
+
+--备份原表
+create table PORTAL.t_indicator_0605 as (select * from  PORTAL.t_indicator)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.t_indicator_0605;
+alter table  PORTAL.t_indicator_0605 drop materialized query;
+---t_indicator_tmp --> t_indicator
+
+drop table PORTAL.t_indicator;
+create table PORTAL.t_indicator as (select * from  PORTAL.t_indicator_tmp)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.t_indicator;
+alter table  PORTAL.t_indicator drop materialized query;
+drop table portal.t_indicator_tmp
+
+
+--新增
+select * from t_indicator_mod_rec t1 where t1.is_new like '新增'
+
+select * from t_indicator t where t.indicator_name in (select name from t_indicator_mod_rec t1 where t1.is_new like '新增')

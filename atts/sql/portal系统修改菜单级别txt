@@ -1,0 +1,42 @@
+--先备份表
+create table PORTAL.T_SYS_FUNCTION_PRIVI_0513 as (select * from  PORTAL.T_SYS_FUNCTION_PRIVI)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_FUNCTION_PRIVI_0513;
+alter table  PORTAL.T_SYS_FUNCTION_PRIVI_0513 drop materialized query;
+
+create table  PORTAL.T_SYS_FUNCTION_REPORT_0513 as (select * from  PORTAL.T_SYS_FUNCTION_REPORT)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_FUNCTION_REPORT_0513;
+alter table  PORTAL.T_SYS_FUNCTION_REPORT_0513 drop materialized query;
+
+create table  PORTAL.T_SYS_ROLE_REPORT_0513 as (select * from  PORTAL.T_SYS_ROLE_REPORT)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_ROLE_REPORT_0513;
+alter table  PORTAL.T_SYS_ROLE_REPORT_0513 drop materialized query;
+
+--1: 根据二级报表查询 菜单ID
+select * from T_SYS_FUNCTION_PRIVI t where 1=1 and t.enabled = 1
+and t.function_privi_name like '业绩管理'
+
+--FUNCTION_PRIVI_ID 100147828
+
+--2: 根据菜单ID查询子菜单ID 并禁用子菜单
+select * from PORTAL.T_SYS_FUNCTION_PRIVI t where 1=1 and t.enabled = 1
+and t.parent_function_id like '100147828' 
+
+--FUNCTION_PRIVI_ID 100147830
+
+--ENABLED --> 2
+
+--3: 根据子菜单查询 报表并将报表关联的菜单改为二级菜单ID（步骤1的结果）
+select * from PORTAL.T_SYS_FUNCTION_REPORT t where t.function_privi_id = '100147830'
+update T_SYS_FUNCTION_REPORT t set t.function_privi_id = '100147828' where t.function_privi_id = '100147830'
+
+--4:根据子菜单查询权限表将function_privi_id改为二级菜单ID（步骤1的结果）
+select * from PORTAL.T_SYS_ROLE_REPORT t where t.function_privi_id = '100147830'
+update T_SYS_ROLE_REPORT t set t.function_privi_id = '100147828' where t.function_privi_id = '100147830'
+
+

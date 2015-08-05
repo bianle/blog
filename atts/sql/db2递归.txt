@@ -1,0 +1,11 @@
+/* db2 ตÝน้*/
+   with n(level,function_privi_id,parent_function_id,function_privi_name,id_chain) as (
+        select 1,function_privi_id,parent_function_id,function_privi_name,cast(function_privi_id as varchar(300))||','
+        from t_sys_function_privi 
+        where parent_function_id = '10' 
+        union all
+        select n.level+1,nplus1.function_privi_id,nplus1.parent_function_id ,nplus1.function_privi_name,n.id_chain||nplus1.function_privi_id||',' 
+        from t_sys_function_privi as nplus1,n
+        where n.function_privi_id = nplus1.parent_function_id
+    )
+    select * from n order by id_chain

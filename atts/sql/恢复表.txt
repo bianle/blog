@@ -1,0 +1,20 @@
+drop table PORTAL.T_SYS_FUNCTION_PRIVI;
+create table PORTAL.T_SYS_FUNCTION_PRIVI as (select * from  PORTAL.T_SYS_FUNCTION_PRIVI_0513)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_FUNCTION_PRIVI;
+alter table  PORTAL.T_SYS_FUNCTION_PRIVI drop materialized query;
+
+drop table PORTAL.T_SYS_FUNCTION_REPORT;
+create table  PORTAL.T_SYS_FUNCTION_REPORT as (select * from  PORTAL.T_SYS_FUNCTION_REPORT_0513)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_FUNCTION_REPORT;
+alter table  PORTAL.T_SYS_FUNCTION_REPORT drop materialized query;
+
+drop table PORTAL.T_SYS_ROLE_REPORT;
+create table  PORTAL.T_SYS_ROLE_REPORT as (select * from  PORTAL.T_SYS_ROLE_REPORT_0513)
+data initially deferred
+refresh deferred;
+refresh table  PORTAL.T_SYS_ROLE_REPORT;
+alter table  PORTAL.T_SYS_ROLE_REPORT drop materialized query;

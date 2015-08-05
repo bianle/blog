@@ -1,0 +1,7 @@
+SELECT * FROM (   SELECT     ROWNUMBER() OVER(ORDER BY a.THEME_STATUS,a.ID ) AS ROWID ,      a.ID,     a.PARENT_ID,     a.THEME_CODE,     a.THEME_NAME,     a.THEME_DESC,     a.THEME_STATUS,     a.CREATOR,     a.CREATEDATE,     a.UPDATOR,     a.UPDATEDATE ,    a.THEME_TYPE ,    (SELECT THEME_NAME FROM T_BASE_THEME WHERE ID = a.PARENT_ID ) AS parentThemeName       FROM        T_BASE_THEME a       WHERE (1=1)        AND a.PARENT_ID = ?               ) b    WHERE (1=1)        
+[report]
+SELECT * FROM (   SELECT     ROWNUMBER() OVER(ORDER BY a.THEME_STATUS,a.ID ) AS ROWID ,      a.ID,     a.PARENT_ID,     a.THEME_CODE,     a.THEME_NAME,     a.THEME_DESC,     a.THEME_STATUS,     a.CREATOR,     a.CREATEDATE,     a.UPDATOR,     a.UPDATEDATE ,    a.THEME_TYPE ,    (SELECT THEME_NAME FROM T_BASE_THEME WHERE ID = a.PARENT_ID ) AS parentThemeName       FROM        T_BASE_THEME a       WHERE (1=1)        AND a.PARENT_ID = ?               ) b    WHERE (1=1)        
+[indicator]
+
+SELECT * FROM (   SELECT     ROWNUMBER() OVER(ORDER BY a.THEME_STATUS,a.ID ) AS ROWID ,      a.ID,     a.PARENT_ID,     a.THEME_CODE,     a.THEME_NAME,     a.THEME_DESC,     a.THEME_STATUS,     a.CREATOR,     a.CREATEDATE,     a.UPDATOR,     a.UPDATEDATE ,    a.THEME_TYPE ,    (SELECT THEME_NAME FROM T_BASE_THEME WHERE ID = a.PARENT_ID ) AS parentThemeName       FROM        T_BASE_THEME a       WHERE (1=1)           AND UPPER(a.THEME_NAME) LIKE '%×ÛºÏ¹ÜÀí%'               AND a.THEME_TYPE = ?      ) b    WHERE (1=1)         AND b.ROWID >= 1             AND b.ROWID <= 10      
+[0]

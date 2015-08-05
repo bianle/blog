@@ -1,0 +1,233 @@
+SELECT
+    t.INDICATOR_NAME ,
+    CASE
+        WHEN t.INDICATOR_LEVEL = '1'
+        THEN '公司级'
+        ELSE '部门级'
+    END indicator_level,
+    t2.THEME_NAME,
+    t3.theme_name sub_theme_name,
+    d.DEPT_NAME,
+    t.INDICATOR_DEFINITION,
+    t.FORMULA_EXPLAIN
+FROM
+    PORTAL.T_INDICATOR t
+JOIN PORTAL.T_BASE_THEME t2
+ON
+    t2.id = t.THEME
+JOIN T_Base_theme t3
+ON
+    t3.id = t.subtheme
+JOIN T_BASE_STANDARD_DEPT d
+ON
+    d.id = t.OWNER_DEPT
+ORDER BY
+    t2.id,
+    t3.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT
+    
+    CASE
+        WHEN t.INDICATOR_LEVEL = '1'
+        THEN '公司级'
+        ELSE '部门级'
+    END indicator_level,
+
+    t2.THEME_NAME,
+    t3.theme_name sub_theme_name,
+t.INDICATOR_NAME ,
+    d.DEPT_NAME,
+d2.dept_name u_dept_name,
+t.SYNONYM_NAME,
+    t.INDICATOR_DEFINITION,
+    t.FORMULA_EXPLAIN,
+t.COMPUTE_UNIT,
+t.COMPUTE_FREQUENCY
+FROM
+    PORTAL.T_INDICATOR t
+JOIN PORTAL.T_BASE_THEME t2
+ON
+    t2.id = t.THEME
+JOIN T_Base_theme t3
+ON
+    t3.id = t.subtheme
+JOIN T_BASE_STANDARD_DEPT d
+ON
+    d.id = t.OWNER_DEPT
+join PORTAL.T_INDICATOR_USER u
+on u.INDICATOR_CODE = t.INDICATOR_CODE
+and u.VERSION_NUM = t.VERSION_NUM
+join PORTAL.T_BASE_STANDARD_DEPT d2
+on d2.ID = u.DEPT_ID
+where d.DEPT_NAME = '运营中心'
+ORDER BY
+    t2.id,
+    t3.id
+
+
+
+SELECT
+    
+    t.INDICATOR_NAME ,
+    CASE
+        WHEN t.INDICATOR_LEVEL = '1'
+        THEN '公司级'
+        ELSE '部门级'
+    END indicator_level,
+
+    t2.THEME_NAME,
+    t3.theme_name sub_theme_name,
+
+    d.DEPT_NAME,
+d2.dept_name u_dept_name,
+t.SYNONYM_NAME,
+    t.INDICATOR_DEFINITION,
+    t.FORMULA_EXPLAIN,
+--t.COMPUTE_UNIT,
+--t.COMPUTE_FREQUENCY,
+opt.option_value,
+opt2.option_value
+FROM
+    PORTAL.T_INDICATOR t
+JOIN PORTAL.T_BASE_THEME t2
+ON
+    t2.id = t.THEME
+JOIN T_Base_theme t3
+ON
+    t3.id = t.subtheme
+JOIN T_BASE_STANDARD_DEPT d
+ON
+    d.id = t.OWNER_DEPT
+join PORTAL.T_INDICATOR_USER u
+on u.INDICATOR_CODE = t.INDICATOR_CODE
+and u.VERSION_NUM = t.VERSION_NUM
+join PORTAL.T_BASE_STANDARD_DEPT d2
+on d2.ID = u.DEPT_ID
+join t_sys_option opt 
+on opt.option_type_code = 'COMPUTE_UNIT'
+and opt.option_type_id = t.COMPUTE_UNIT
+join t_sys_option opt2 
+on opt2.option_type_code = 'COMPUTE_FREQUENCY'
+and opt2.option_type_id = t.COMPUTE_FREQUENCY
+where 1=1
+--and d.DEPT_NAME = '运营中心'
+and t2.theme_name not in('运营管理','客户管理','其他')
+ORDER BY
+
+    t2.id,
+    t3.id,
+    t.INDICATOR_NAME 
+
+SELECT
+    
+    t.INDICATOR_NAME ,
+    CASE
+        WHEN t.INDICATOR_LEVEL = '1'
+        THEN '公司级'
+        ELSE '部门级'
+    END indicator_level,
+
+    t2.THEME_NAME,
+    t3.theme_name sub_theme_name,
+
+    d.DEPT_NAME,
+
+
+    t.INDICATOR_DEFINITION,
+    t.FORMULA_EXPLAIN,
+t.REMARK,
+t.SYNONYM_NAME,
+d2.dept_name u_dept_name,
+--t.COMPUTE_UNIT,
+--t.COMPUTE_FREQUENCY,
+opt.option_value,
+opt2.option_value
+FROM
+    PORTAL.T_INDICATOR t
+JOIN PORTAL.T_BASE_THEME t2
+ON
+    t2.id = t.THEME
+JOIN T_Base_theme t3
+ON
+    t3.id = t.subtheme
+JOIN T_BASE_STANDARD_DEPT d
+ON
+    d.id = t.OWNER_DEPT
+join PORTAL.T_INDICATOR_USER u
+on u.INDICATOR_CODE = t.INDICATOR_CODE
+and u.VERSION_NUM = t.VERSION_NUM
+join PORTAL.T_BASE_STANDARD_DEPT d2
+on d2.ID = u.DEPT_ID
+join t_sys_option opt 
+on opt.option_type_code = 'COMPUTE_UNIT'
+and opt.option_type_id = t.COMPUTE_UNIT
+join t_sys_option opt2 
+on opt2.option_type_code = 'COMPUTE_FREQUENCY'
+and opt2.option_type_id = t.COMPUTE_FREQUENCY
+where 1=1
+--and d.DEPT_NAME = '运营中心'
+and t2.theme_name not in('运营管理','客户管理','其他')
+ORDER BY
+
+    t2.id,
+    t3.id,
+    t.INDICATOR_NAME 
+
+
+--更新owner
+SELECT
+    *
+FROM
+    t_indicator_tmp t
+WHERE
+    EXISTS
+    (
+        SELECT
+            d.id
+        FROM
+            t_indicator_mod_rec t1,T_BASE_STANDARD_DEPT d
+        WHERE
+            d.dept_name = t1.owner
+        and    t1.name = t.indicator_name
+        AND d.id <> t.OWNER_DEPT
+    )
+    and t.indicator_enabled= 1 ;
+--(24 rows)
+
+update
+    t_indicator_tmp t
+set t.OWNER_DEPT = 
+(select d.id from t_indicator_mod_rec t2,T_BASE_STANDARD_DEPT d where t2.name = t.indicator_name and d.dept_name = t2.owner )
+WHERE
+    EXISTS
+    (
+        SELECT
+            name
+        FROM
+            t_indicator_mod_rec t1,T_BASE_STANDARD_DEPT d
+        WHERE
+            d.dept_name = t1.owner
+        and    t1.name = t.indicator_name
+        AND d.id <> t.OWNER_DEPT
+    )
+    and t.indicator_enabled= 1 ;
+--(24 rows updated)
+
+

@@ -1,0 +1,1 @@
+ALTER TABLE PORTAL.CMS_ARTICLE alter column id set not null
