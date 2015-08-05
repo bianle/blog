@@ -22,11 +22,11 @@ import jxl.write.biff.RowsExceededException;
 public class XlsReader {
 
 	/**
-	 * ¶ÁÈ¡xlsÎÄ¼şÄÚÈİ
+	 * è¯»å–xlsæ–‡ä»¶å†…å®¹
 	 * 
 	 * @param file
-	 *            ÏëÒª¶ÁÈ¡µÄÎÄ¼ş¶ÔÏó
-	 * @return ·µ»ØÎÄ¼şÄÚÈİ
+	 *            æƒ³è¦è¯»å–çš„æ–‡ä»¶å¯¹è±¡
+	 * @return è¿”å›æ–‡ä»¶å†…å®¹
 	 */
 	public static String xls2String(File file) {
 		String result = "";
@@ -68,8 +68,8 @@ public class XlsReader {
 					}else{
 						//String dept1 = (String)((String[])rows.get(startRow))[1];
 						String dept2 = (String)((String[])rows.get(startRow))[6];
-						//((String[])rows.get(startRow))[1] = (dept1 += "¡¢"+cells[1].getContents());
-						((String[])rows.get(startRow))[6] = (dept2 += "¡¢"+cells[6].getContents());
+						//((String[])rows.get(startRow))[1] = (dept1 += "ã€"+cells[1].getContents());
+						((String[])rows.get(startRow))[6] = (dept2 += "ã€"+cells[6].getContents());
 					}
 						
 				}
@@ -127,7 +127,7 @@ public class XlsReader {
 	}
 
 	public static void main(String[] args) {
-		File file = new File("D:\\bl\\½ÓÊÕ\\¶ÎÑ§ÖÇ\\Ö¸±êµ¼³ö20150720\\t_indicator.xls");
+		File file = new File("D:\\bl\\æ¥æ”¶\\æ®µå­¦æ™º\\æŒ‡æ ‡å¯¼å‡º20150720\\t_indicator.xls");
 		System.out.println(xls2String(file));
 	}
 

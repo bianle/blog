@@ -1,4 +1,4 @@
-/* db2 µÝ¹é*/
+/* db2 é€’å½’*/
    with n(level,function_privi_id,parent_function_id,function_privi_name,id_chain) as (
         select 1,function_privi_id,parent_function_id,function_privi_name,cast(function_privi_id as varchar(300))||','
         from t_sys_function_privi 

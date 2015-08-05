@@ -2,8 +2,8 @@ SELECT
     t.INDICATOR_NAME ,
     CASE
         WHEN t.INDICATOR_LEVEL = '1'
-        THEN '¹«Ë¾¼¶'
-        ELSE '²¿ÃÅ¼¶'
+        THEN 'å…¬å¸çº§'
+        ELSE 'éƒ¨é—¨çº§'
     END indicator_level,
     t2.THEME_NAME,
     t3.theme_name sub_theme_name,
@@ -46,8 +46,8 @@ SELECT
     
     CASE
         WHEN t.INDICATOR_LEVEL = '1'
-        THEN '¹«Ë¾¼¶'
-        ELSE '²¿ÃÅ¼¶'
+        THEN 'å…¬å¸çº§'
+        ELSE 'éƒ¨é—¨çº§'
     END indicator_level,
 
     t2.THEME_NAME,
@@ -76,7 +76,7 @@ on u.INDICATOR_CODE = t.INDICATOR_CODE
 and u.VERSION_NUM = t.VERSION_NUM
 join PORTAL.T_BASE_STANDARD_DEPT d2
 on d2.ID = u.DEPT_ID
-where d.DEPT_NAME = 'ÔËÓªÖÐÐÄ'
+where d.DEPT_NAME = 'è¿è¥ä¸­å¿ƒ'
 ORDER BY
     t2.id,
     t3.id
@@ -88,8 +88,8 @@ SELECT
     t.INDICATOR_NAME ,
     CASE
         WHEN t.INDICATOR_LEVEL = '1'
-        THEN '¹«Ë¾¼¶'
-        ELSE '²¿ÃÅ¼¶'
+        THEN 'å…¬å¸çº§'
+        ELSE 'éƒ¨é—¨çº§'
     END indicator_level,
 
     t2.THEME_NAME,
@@ -127,8 +127,8 @@ join t_sys_option opt2
 on opt2.option_type_code = 'COMPUTE_FREQUENCY'
 and opt2.option_type_id = t.COMPUTE_FREQUENCY
 where 1=1
---and d.DEPT_NAME = 'ÔËÓªÖÐÐÄ'
-and t2.theme_name not in('ÔËÓª¹ÜÀí','¿Í»§¹ÜÀí','ÆäËû')
+--and d.DEPT_NAME = 'è¿è¥ä¸­å¿ƒ'
+and t2.theme_name not in('è¿è¥ç®¡ç†','å®¢æˆ·ç®¡ç†','å…¶ä»–')
 ORDER BY
 
     t2.id,
@@ -140,8 +140,8 @@ SELECT
     t.INDICATOR_NAME ,
     CASE
         WHEN t.INDICATOR_LEVEL = '1'
-        THEN '¹«Ë¾¼¶'
-        ELSE '²¿ÃÅ¼¶'
+        THEN 'å…¬å¸çº§'
+        ELSE 'éƒ¨é—¨çº§'
     END indicator_level,
 
     t2.THEME_NAME,
@@ -182,8 +182,8 @@ join t_sys_option opt2
 on opt2.option_type_code = 'COMPUTE_FREQUENCY'
 and opt2.option_type_id = t.COMPUTE_FREQUENCY
 where 1=1
---and d.DEPT_NAME = 'ÔËÓªÖÐÐÄ'
-and t2.theme_name not in('ÔËÓª¹ÜÀí','¿Í»§¹ÜÀí','ÆäËû')
+--and d.DEPT_NAME = 'è¿è¥ä¸­å¿ƒ'
+and t2.theme_name not in('è¿è¥ç®¡ç†','å®¢æˆ·ç®¡ç†','å…¶ä»–')
 ORDER BY
 
     t2.id,
@@ -191,7 +191,7 @@ ORDER BY
     t.INDICATOR_NAME 
 
 
---¸üÐÂowner
+--æ›´æ–°owner
 SELECT
     *
 FROM

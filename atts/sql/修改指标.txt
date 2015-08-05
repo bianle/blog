@@ -1,15 +1,15 @@
---1¡¢ĞÂ½¨Ö¸±êÁÙÊ±±í
+--1ã€æ–°å»ºæŒ‡æ ‡ä¸´æ—¶è¡¨
 create table PORTAL.T_INDICATOR_TMP as (select * from  PORTAL.T_INDICATOR)
 data initially deferred
 refresh deferred;
 refresh table  PORTAL.T_INDICATOR_TMP;
 alter table  PORTAL.T_INDICATOR_TMP drop materialized query;
 
---T_INDICATOR_TMP Î´Ö¸±êÁÙÊ±±í£¬ÓÃÓÚ»º´æĞŞ¸ÄºóµÄÖ¸±ê
+--T_INDICATOR_TMP æœªæŒ‡æ ‡ä¸´æ—¶è¡¨ï¼Œç”¨äºç¼“å­˜ä¿®æ”¹åçš„æŒ‡æ ‡
 select * from T_INDICATOR_TMP
 
 --drop table PORTAL.T_INDICATOR_MOD_REC
---´´½¨±í£¬´æ·ÅĞŞ¸ÄÔ­Ê¼¼ÇÂ¼
+--åˆ›å»ºè¡¨ï¼Œå­˜æ”¾ä¿®æ”¹åŸå§‹è®°å½•
 
 CREATE
     TABLE PORTAL.T_INDICATOR_MOD_REC
@@ -59,7 +59,7 @@ WHERE
     );
 --(426 rows)
 
---¸üĞÂ¹«Ê½ÁĞ
+--æ›´æ–°å…¬å¼åˆ—
 SELECT
     *
 FROM
@@ -96,7 +96,7 @@ WHERE
     and t.indicator_enabled= 1 ;
 --(190 rows updated)
 
---¸üĞÂ¶¨ÒåÁĞ
+--æ›´æ–°å®šä¹‰åˆ—
 SELECT
     *
 FROM
@@ -133,7 +133,7 @@ WHERE
     and t.indicator_enabled= 1 ;
 --(162 rows updated)
 
---¸üĞÂÖ¸±ê¼¶±ğ
+--æ›´æ–°æŒ‡æ ‡çº§åˆ«
 SELECT
     *
 FROM
@@ -148,7 +148,7 @@ WHERE
         WHERE
             t1.name = t.indicator_name
         AND t.INDICATOR_LEVEL <> CASE
-        WHEN t1.lv = '¹«Ë¾¼¶'
+        WHEN t1.lv = 'å…¬å¸çº§'
         THEN '1'
         ELSE '0'
     END 
@@ -160,7 +160,7 @@ update
     t_indicator_tmp t
 set t.INDICATOR_LEVEL = 
 (select  CASE
-        WHEN t2.lv = '¹«Ë¾¼¶'
+        WHEN t2.lv = 'å…¬å¸çº§'
         THEN '1'
         ELSE '0'
     END  from t_indicator_mod_rec t2 where t2.name = t.indicator_name)
@@ -174,7 +174,7 @@ WHERE
         WHERE
             t1.name = t.indicator_name
         AND t.INDICATOR_LEVEL <> CASE
-        WHEN t1.lv = '¹«Ë¾¼¶'
+        WHEN t1.lv = 'å…¬å¸çº§'
         THEN '1'
         ELSE '0'
     END 
@@ -183,7 +183,7 @@ WHERE
 --(1 row updated)
 
 
---¸üĞÂÖ¸±êÃû
+--æ›´æ–°æŒ‡æ ‡å
 SELECT
     *
 FROM
@@ -221,16 +221,16 @@ WHERE
 
 
 
---********************  ĞŞ¸ÄÁËÖ¸±êÃûµÄÖ¸±ê
+--********************  ä¿®æ”¹äº†æŒ‡æ ‡åçš„æŒ‡æ ‡
 select t.*,tmp.name from 
 (
---ÒªĞŞ¸ÄµÄÖ¸±ê
+--è¦ä¿®æ”¹çš„æŒ‡æ ‡
 SELECT
     t.INDICATOR_NAME ,
     CASE
         WHEN t.INDICATOR_LEVEL = '1'
-        THEN '¹«Ë¾¼¶'
-        ELSE '²¿ÃÅ¼¶'
+        THEN 'å…¬å¸çº§'
+        ELSE 'éƒ¨é—¨çº§'
     END indicator_level,
 
     t2.THEME_NAME,
@@ -271,7 +271,7 @@ join t_sys_option opt2
 on opt2.option_type_code = 'COMPUTE_FREQUENCY'
 and opt2.option_type_id = t.COMPUTE_FREQUENCY
 where 1=1
-and t2.theme_name not in('ÔËÓª¹ÜÀí','¿Í»§¹ÜÀí','ÆäËû','ÆäËü')
+and t2.theme_name not in('è¿è¥ç®¡ç†','å®¢æˆ·ç®¡ç†','å…¶ä»–','å…¶å®ƒ')
 and t.indicator_enabled= 1 
 ORDER BY
     t2.id,
@@ -285,67 +285,67 @@ where t.indicator_name not in
 select name from t_indicator_mod_rec
 )
 
---ÓªÏú²¿¾ùÊµ¶¯ÈËÁ¦ --> ÓªÒµ²¿¾ùÊµ¶¯ÈËÁ¦
-select * from t_indicator_tmp t where t.INDICATOR_NAME = 'ÓªÏú²¿¾ùÊµ¶¯ÈËÁ¦'
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÓªÒµ²¿¾ùÊµ¶¯ÈËÁ¦' where t.INDICATOR_NAME = 'ÓªÏú²¿¾ùÊµ¶¯ÈËÁ¦'
---Ê×ÄêÖ±½ÓÓ¶½ğ --Ê×ÄêÖ±½ÓÓ¶½ğ(FYC)
-update t_indicator_tmp t set t.INDICATOR_NAME = 'Ê×ÄêÖ±½ÓÓ¶½ğ(FYC)' where t.INDICATOR_NAME = 'Ê×ÄêÖ±½ÓÓ¶½ğ'
---ĞÂ¿ª·¢²úÆ·ÊıÁ¿ --ĞÂÉÏÊĞ²úÆ·ÊıÁ¿
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ĞÂÉÏÊĞ²úÆ·ÊıÁ¿' where t.INDICATOR_NAME = 'ĞÂ¿ª·¢²úÆ·ÊıÁ¿'
---ÔÙ±£Ç°Åâ¸¶ÂÊ --¶ÌÆÚ½¡¿µÏÕ/ÒâÍâÏÕÔÙ±£Ç°Åâ¸¶ÂÊ
-update t_indicator_tmp t set t.INDICATOR_NAME = '¶ÌÆÚ½¡¿µÏÕ/ÒâÍâÏÕÔÙ±£Ç°Åâ¸¶ÂÊ' where t.INDICATOR_NAME = 'ÔÙ±£Ç°Åâ¸¶ÂÊ'
---ÔÙ±£ºóÅâ¸¶ÂÊ --¶ÌÆÚ½¡¿µÏÕ/ÒâÍâÏÕÔÙ±£ºóÅâ¸¶ÂÊ
-update t_indicator_tmp t set t.INDICATOR_NAME = '¶ÌÆÚ½¡¿µÏÕ/ÒâÍâÏÕÔÙ±£ºóÅâ¸¶ÂÊ' where t.INDICATOR_NAME = 'ÔÙ±£ºóÅâ¸¶ÂÊ'
---»ù±¾·¨³É±¾Õ¼±È --µçÏú»ù±¾·¨³É±¾Õ¼±È
-update t_indicator_tmp t set t.INDICATOR_NAME = 'µçÏú»ù±¾·¨³É±¾Õ¼±È' where t.INDICATOR_NAME = '»ù±¾·¨³É±¾Õ¼±È'
---ÓªÏú×é¾ùÈËÁ¦ --ÓªÒµ×é¾ùÈËÁ¦
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÓªÒµ×é¾ùÈËÁ¦' where t.INDICATOR_NAME = 'ÓªÏú×é¾ùÈËÁ¦'
---ÓªÏú×é¾ùNPÈËÁ¦ --ÓªÒµ×é¾ùNPÈËÁ¦
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÓªÒµ×é¾ùNPÈËÁ¦' where t.INDICATOR_NAME = 'ÓªÏú×é¾ùNPÈËÁ¦'
---ÓªÏú²¿¾ùFYC --ÓªÒµ²¿¾ùFYC
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÓªÒµ²¿¾ùFYC' where t.INDICATOR_NAME = 'ÓªÏú²¿¾ùFYC'
---ÓªÏú²¿¾ù×éÊı --ÓªÒµ²¿¾ù×éÊı
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÓªÒµ²¿¾ù×éÊı' where t.INDICATOR_NAME = 'ÓªÏú²¿¾ù×éÊı'
---Í¨Ó¡½ğ¶îÕ¼±È --Í³Ó¡½ğ¶îÕ¼±È
-update t_indicator_tmp t set t.INDICATOR_NAME = 'Í³Ó¡½ğ¶îÕ¼±È' where t.INDICATOR_NAME = 'Í¨Ó¡½ğ¶îÕ¼±È'
---Ö±½ÓÏúÊÛ·ÑÓÃÖ´ĞĞÂÊ --Ö±½ÓÏúÊÛ·ÑÓÃ
-update t_indicator_tmp t set t.INDICATOR_NAME = 'Ö±½ÓÏúÊÛ·ÑÓÃ' where t.INDICATOR_NAME = 'Ö±½ÓÏúÊÛ·ÑÓÃÖ´ĞĞÂÊ'
---ÍøÉÏ±£µ¥¿Í»§Êı --ÏßÉÏ±£µ¥¿Í»§Êı
-update t_indicator_tmp t set t.INDICATOR_NAME = 'ÏßÉÏ±£µ¥¿Í»§Êı' where t.INDICATOR_NAME = 'ÍøÉÏ±£µ¥¿Í»§Êı'
+--è¥é”€éƒ¨å‡å®åŠ¨äººåŠ› --> è¥ä¸šéƒ¨å‡å®åŠ¨äººåŠ›
+select * from t_indicator_tmp t where t.INDICATOR_NAME = 'è¥é”€éƒ¨å‡å®åŠ¨äººåŠ›'
+update t_indicator_tmp t set t.INDICATOR_NAME = 'è¥ä¸šéƒ¨å‡å®åŠ¨äººåŠ›' where t.INDICATOR_NAME = 'è¥é”€éƒ¨å‡å®åŠ¨äººåŠ›'
+--é¦–å¹´ç›´æ¥ä½£é‡‘ --é¦–å¹´ç›´æ¥ä½£é‡‘(FYC)
+update t_indicator_tmp t set t.INDICATOR_NAME = 'é¦–å¹´ç›´æ¥ä½£é‡‘(FYC)' where t.INDICATOR_NAME = 'é¦–å¹´ç›´æ¥ä½£é‡‘'
+--æ–°å¼€å‘äº§å“æ•°é‡ --æ–°ä¸Šå¸‚äº§å“æ•°é‡
+update t_indicator_tmp t set t.INDICATOR_NAME = 'æ–°ä¸Šå¸‚äº§å“æ•°é‡' where t.INDICATOR_NAME = 'æ–°å¼€å‘äº§å“æ•°é‡'
+--å†ä¿å‰èµ”ä»˜ç‡ --çŸ­æœŸå¥åº·é™©/æ„å¤–é™©å†ä¿å‰èµ”ä»˜ç‡
+update t_indicator_tmp t set t.INDICATOR_NAME = 'çŸ­æœŸå¥åº·é™©/æ„å¤–é™©å†ä¿å‰èµ”ä»˜ç‡' where t.INDICATOR_NAME = 'å†ä¿å‰èµ”ä»˜ç‡'
+--å†ä¿åèµ”ä»˜ç‡ --çŸ­æœŸå¥åº·é™©/æ„å¤–é™©å†ä¿åèµ”ä»˜ç‡
+update t_indicator_tmp t set t.INDICATOR_NAME = 'çŸ­æœŸå¥åº·é™©/æ„å¤–é™©å†ä¿åèµ”ä»˜ç‡' where t.INDICATOR_NAME = 'å†ä¿åèµ”ä»˜ç‡'
+--åŸºæœ¬æ³•æˆæœ¬å æ¯” --ç”µé”€åŸºæœ¬æ³•æˆæœ¬å æ¯”
+update t_indicator_tmp t set t.INDICATOR_NAME = 'ç”µé”€åŸºæœ¬æ³•æˆæœ¬å æ¯”' where t.INDICATOR_NAME = 'åŸºæœ¬æ³•æˆæœ¬å æ¯”'
+--è¥é”€ç»„å‡äººåŠ› --è¥ä¸šç»„å‡äººåŠ›
+update t_indicator_tmp t set t.INDICATOR_NAME = 'è¥ä¸šç»„å‡äººåŠ›' where t.INDICATOR_NAME = 'è¥é”€ç»„å‡äººåŠ›'
+--è¥é”€ç»„å‡NPäººåŠ› --è¥ä¸šç»„å‡NPäººåŠ›
+update t_indicator_tmp t set t.INDICATOR_NAME = 'è¥ä¸šç»„å‡NPäººåŠ›' where t.INDICATOR_NAME = 'è¥é”€ç»„å‡NPäººåŠ›'
+--è¥é”€éƒ¨å‡FYC --è¥ä¸šéƒ¨å‡FYC
+update t_indicator_tmp t set t.INDICATOR_NAME = 'è¥ä¸šéƒ¨å‡FYC' where t.INDICATOR_NAME = 'è¥é”€éƒ¨å‡FYC'
+--è¥é”€éƒ¨å‡ç»„æ•° --è¥ä¸šéƒ¨å‡ç»„æ•°
+update t_indicator_tmp t set t.INDICATOR_NAME = 'è¥ä¸šéƒ¨å‡ç»„æ•°' where t.INDICATOR_NAME = 'è¥é”€éƒ¨å‡ç»„æ•°'
+--é€šå°é‡‘é¢å æ¯” --ç»Ÿå°é‡‘é¢å æ¯”
+update t_indicator_tmp t set t.INDICATOR_NAME = 'ç»Ÿå°é‡‘é¢å æ¯”' where t.INDICATOR_NAME = 'é€šå°é‡‘é¢å æ¯”'
+--ç›´æ¥é”€å”®è´¹ç”¨æ‰§è¡Œç‡ --ç›´æ¥é”€å”®è´¹ç”¨
+update t_indicator_tmp t set t.INDICATOR_NAME = 'ç›´æ¥é”€å”®è´¹ç”¨' where t.INDICATOR_NAME = 'ç›´æ¥é”€å”®è´¹ç”¨æ‰§è¡Œç‡'
+--ç½‘ä¸Šä¿å•å®¢æˆ·æ•° --çº¿ä¸Šä¿å•å®¢æˆ·æ•°
+update t_indicator_tmp t set t.INDICATOR_NAME = 'çº¿ä¸Šä¿å•å®¢æˆ·æ•°' where t.INDICATOR_NAME = 'ç½‘ä¸Šä¿å•å®¢æˆ·æ•°'
 
 
---×ÛºÏÍË±£ÂÊ   Òø±£´ó¸öÏÕ±£·Ñ
---            ÍâÇÚÕĞÆ¸·ÑÓÃ
---            ¼ş¾ùÒø±£´ó¸öÏÕ±£·Ñ
---            ¼ş¾ùAPE±£·Ñ£¨½ûÓÃ£©
+--ç»¼åˆé€€ä¿ç‡   é“¶ä¿å¤§ä¸ªé™©ä¿è´¹
+--            å¤–å‹¤æ‹›è˜è´¹ç”¨
+--            ä»¶å‡é“¶ä¿å¤§ä¸ªé™©ä¿è´¹
+--            ä»¶å‡APEä¿è´¹ï¼ˆç¦ç”¨ï¼‰
 
 
---ÖØ¸´ ¸ù¾İÃûĞŞ¸ÄÆäËûÁĞ
+--é‡å¤ æ ¹æ®åä¿®æ”¹å…¶ä»–åˆ—
 
 select * from t_indicator_mod_rec t
 where t.name not in ( 
 select t.INDICATOR_NAME from t_indicator_tmp t
  )
-and t.is_new <> 'ĞÂÔö'
+and t.is_new <> 'æ–°å¢'
 --********************  
 
 
 
 
---½ûÓÃ
+--ç¦ç”¨
 select * from t_indicator_tmp t where t.indicator_name in 
 (
-select name from t_indicator_mod_rec t1 where t1.remarks like '½ûÓÃ'
+select name from t_indicator_mod_rec t1 where t1.remarks like 'ç¦ç”¨'
 )
 
 update t_indicator_tmp t set t.indicator_enabled = 2 where t.indicator_name in
 (
-select name from t_indicator_mod_rec t1 where t1.remarks like '½ûÓÃ'
+select name from t_indicator_mod_rec t1 where t1.remarks like 'ç¦ç”¨'
 )
 
 
 
---±¸·İÔ­±í
+--å¤‡ä»½åŸè¡¨
 create table PORTAL.t_indicator_0605 as (select * from  PORTAL.t_indicator)
 data initially deferred
 refresh deferred;
@@ -362,7 +362,7 @@ alter table  PORTAL.t_indicator drop materialized query;
 drop table portal.t_indicator_tmp
 
 
---ĞÂÔö
-select * from t_indicator_mod_rec t1 where t1.is_new like 'ĞÂÔö'
+--æ–°å¢
+select * from t_indicator_mod_rec t1 where t1.is_new like 'æ–°å¢'
 
-select * from t_indicator t where t.indicator_name in (select name from t_indicator_mod_rec t1 where t1.is_new like 'ĞÂÔö')
+select * from t_indicator t where t.indicator_name in (select name from t_indicator_mod_rec t1 where t1.is_new like 'æ–°å¢')
