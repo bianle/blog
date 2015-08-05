@@ -101,7 +101,7 @@ comments: false
 
 ##cognos报表上传到oa资源库
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
-调度流程参考[离线调度](report-dispatch.html)
+__调度流程参考[离线调度](report-dispatch.html)__
 
 ## 了解websphere集群
 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)__
