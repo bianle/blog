@@ -20,6 +20,7 @@ comments: false
 # portal 优化
 ## 将portal源代码加入svn库
 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:
+
 + [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
 + [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305)
 + [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305)
@@ -49,7 +50,7 @@ comments: false
 + 顶部菜单只显示一级
 
 ## 标准化管理模块
-+ 新增指标改成不需要申请单也可以新增
++ [x]新增指标改成不需要申请单也可以新增
 + 新增维度做成不选择申请单可以新增
 + 指标信息加入KPI分类
 + 流程申请中返回按钮回到历史页面
@@ -58,9 +59,7 @@ comments: false
 
 ## OA指标字典
 + 指标字典改为和portal一套程序，同数据库  
-<font size=1>_注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`_</font>  
-如下:  
-`applicationContext-security-basic.xml`片段：
+<font size=1>_注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`参考`applicationContext-security-basic.xml`片段：_</font>  
 
 ```
 <!-- 指标字典开放 -->
