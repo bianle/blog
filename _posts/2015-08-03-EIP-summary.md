@@ -22,11 +22,14 @@ comments: false
 + [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305)
 + [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305)
 + [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305)
+
 ## 菜单查询逻辑优化
+
 ###增加3个视图：
 + `V_SYS_R_ROLE_RIGHT`角色权限关联视图
 + `V_SYS_RIGHT`权限视图（整合了菜单和报表）
 + `V_SYS_RIGHT_TREE`权限树
+
 ###修改查询逻辑由循环遍历查询改为一次查询
 
 ## 其他sql修改
