@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>知無涯</title>
+
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
+    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1><a href="/">知無涯</a></h1>
+        <p>生有涯，知無涯</p>
+        <ul>
+          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> cognos收集 
+        </h1>
+
+    <h2>前言</h2>
+
+<p>由于从Cognos 10.2版本开始不再支持NTLM方式的认证，所以我们需要一种简单的方式来配置权限认证，根据Cognos SDK自己带的例子，我做了一些修改，使其支持sqlserver、db2、oracle三种数据库的Java Provider方式的权限认证。</p>
+
+<h2>驱动</h2>
+
+<p>测试数据库的版本分别为Sqlserver 2005，db2 V9.7，oracle 10g，Sqlserver、db2和oracle所对应的的驱动分别为<code>sqljdbc4.jar</code>、<code>db2jcc.jar</code>、<code>ojdbc14.jar</code>，请根据实际数据库的版本下载相应的数据库驱动。根据数据库的类型选择相应驱动，并将驱动拷贝到<code>Cognos_Home\webapps\p2pd\WEB-INF\lib</code>下面。</p>
+
+<h2>配置文件</h2>
+
+<p>将数据库配置文件<code>JDBC_Config_Sample1.properties</code>拷贝到<code>Cognos_Home\configuration</code>下面，并根据所选数据库进行相应的修改。</p>
+
+<ul>
+<li>Sqlserver</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#For Microsoft SQL Server connections
+connectionString=jdbc:JSQLConnect://localhost:1433/sdk/applicationName=IBM_C8_CM
+driverClass=com.jnetdirect.jsql.JSQLDriver
+username=sa
+password=apple
+singleSignon=false
+</code></pre></div>
+<p>根据实际数据库的IP、端口号、数据库标识、用户名和密码进行修改。</p>
+
+<ul>
+<li>DB2</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># For DB2 connections
+connectionString=jdbc:db2://localhost:50000/COGNOS:retrieveMessagesFromServerOnGetMessage=true;fullyMaterializeLobData=false;
+driverClass=com.ibm.db2.jcc.DB2Driver
+username=cognos
+password=cognos
+singleSignon=false
+</code></pre></div>
+<p>根据实际数据库的IP、端口号、数据库标识、用户名和密码进行修改。</p>
+
+<ul>
+<li>oracle</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># For oracle connections
+connectionString=jdbc:oracle:thin:@localhost:1521:cognos
+driverClass=oracle.jdbc.driver.OracleDriver
+username=cognos
+password=cognos
+singleSignon=false
+</code></pre></div>
+<p>根据实际数据库的IP、端口号、数据库标识、用户名和密码进行修改。</p>
+
+<h2>Java Provider Jar文件</h2>
+
+<p>将<code>CAM_AAA_JDBCSample.jar</code>拷贝到<code>Cognos_Home\webapps\p2pd\WEB-INF\lib</code>下面。</p>
+
+<h2>创建表</h2>
+
+<p>使用脚本<code>dbInit_sqlserver.sql</code>创建sqlserver数据库的表和视图；
+使用脚本<code>dbInit_db2.sql</code>创建db2数据库的表和视图；
+使用脚本<code>dbInit_oracle.sql</code>创建oracle数据库的表和视图。</p>
+
+<h2>插入数据</h2>
+
+<p>在用户表users和分组表groups中分别插入用户和分组数据。
+对于users表：字段USERID,USERNAME,PASSWORD,LOCALE,TENANT为必填项，其中locale根据需要填写相应值，中文为zh-cn，英文为en；因为不考虑多租户的情况，所以对于所有用户的tenant赋予一个统一值，并且users和groups两个表中的tenant的值要一样，对于字段FULLNAME,EMAIL可以为空。
+对于groups表：字段GROUPID,GROUPNAME,USERID,TENANT都不能为空，tenant的值要与users表中的tenant值一致。</p>
+
+<h2>配置cognos configuration</h2>
+
+<ol>
+<li><p>打开<code>cognos configuration</code>，选中<code>身份验证</code>点击右键选择<code>新建资源</code>-&gt;<code>名称空间</code></p></li>
+<li><p>类型选择<code>自定义java程序</code>。在<code>名称空间标识符</code>处填写<code>Sample1</code>，注意此处必须填写<code>Sampe1</code>，这个名字与配置文件<code>JDBC_Config_Sample1.properties</code>名字中的<code>Sample1</code>是对应的。在<code>Java类名称</code>处填写<code>JDBCSample</code>，将是否允许匿名访问设置为否。</p></li>
+<li><p>保存配置，重启cognos 。</p></li>
+<li><p>登陆<code>cognos connection</code> ，即可看到设置的名称空间<code>Sample1</code></p></li>
+</ol>
+
+
+      </section>
+      
+      <section class="comments">
+        
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/bi/2015/07/11/cognos-collect" data-title="cognos收集" data-url="http://2le.me//bi/2015/07/11/cognos-collect.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+        
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
+

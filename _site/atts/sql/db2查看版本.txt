@@ -1,0 +1,1 @@
+select service_level,fixpack_num from table (sysproc.env_get_inst_info()) as instanceinfo

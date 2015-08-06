@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>知無涯</title>
+
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
+    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1><a href="/">知無涯</a></h1>
+        <p>生有涯，知無涯</p>
+        <ul>
+          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> was集群安装配置部署 
+        </h1>
+
+    <h2>集群架构</h2>
+
+<p>一个管理节点2个受管节点
+3个节点分别部署到3台服务器</p>
+
+<table>
+<tr>
+<td></td>
+<td>主机名</td>
+<td>IP</td>
+</tr>
+<tr>
+<td>管理节点</td>
+<td>mngr</td>
+<td>129.168.0.10</td>
+</tr>
+<tr>
+<td>节点1</td>
+<td>app1</td>
+<td>192.168.0.11</td>
+</tr>
+<tr>
+<td>节点2</td>
+<td>app2</td>
+<td>192.168.0.12</td>
+</tr>
+</table>
+
+<h2>安装方法</h2>
+
+<h3>mngr服务器上was安装</h3>
+
+<p>选择安装was环境时选择<code>Management</code></p>
+
+<h3>app1服务器上was安装</h3>
+
+<p>选择安装was环境时选择<code>Application Server</code>或<code>Customer</code></p>
+
+<h3>app2服务器上was安装</h3>
+
+<p>同app1</p>
+
+<h3>启动dmgr服务</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/opt/IBM/WebSphere/AppServer/profiles/Dmgr01/bin/startManager.sh -profileName=Dmgr01
+</code></pre></div>
+<p>启动成功后可在浏览器中访问<code>http://localhost:9060/ibm/console</code>进入管理控制台</p>
+
+<h3>将app1和app2节点托管给dmgr节点</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/addNode.sh 192.168.0.10:8879
+</code></pre></div>
+<h3>启动was1和was2的代理服务(nodeagent)</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/startNode.sh
+</code></pre></div>
+<h3>配置集群</h3>
+
+<ul>
+<li>登录管理控制台</li>
+<li>新建集群服务器取名<code>cluster1</code>(注意勾选配置HTTP会话内存到内存的复制)</li>
+<li>对应两台服务器分别添加一个server，取名<code>was1</code>和<code>was2</code></li>
+<li>到系统管理-&gt;节点-&gt;同步节点</li>
+<li>启动集群</li>
+</ul>
+
+<h3>部署应用</h3>
+
+<ul>
+<li><p><code>应用程序</code> -&gt; <code>新建应用程序</code> -&gt; <code>下一步...</code> -&gt; <code>was7注意填写应用版本号</code> -&gt; <code>如果有多个应用服务器还应选择部署的服务器</code> -&gt; <code>填写应用程序根</code> -&gt; <code>完成</code></p></li>
+<li><p><code>应用程序</code> -&gt; <code>版本控制中心</code> -&gt; <code>转出</code></p></li>
+</ul>
+
+
+      </section>
+      
+      <section class="comments">
+        
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/java/2015/08/05/was-cluster" data-title="was集群安装配置部署" data-url="http://2le.me//java/2015/08/05/was-cluster.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+        
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
+

@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>知無涯</title>
+
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
+    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1><a href="/">知無涯</a></h1>
+        <p>生有涯，知無涯</p>
+        <ul>
+          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> EIP总结 
+        </h1>
+
+    <hr>
+
+<h1>portal bug修改</h1>
+
+<ul>
+<li>[x] portal 在本地测试机上springcurity报异常<br>
+解决：
+修改<code>web.xml</code>文件,将<code>classpath:</code>改为<code>/WEB-INF/classes/</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;context-param&gt;
+      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+      &lt;param-value&gt;/WEB-INF/classes/applicationContext*.xml&lt;/param-value&gt;
+&lt;/context-param&gt;
+</code></pre></div>
+<hr>
+
+<h1>portal 优化</h1>
+
+<h2>将portal源代码加入svn库</h2>
+
+<ul>
+<li><p>[x] 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:</p>
+
+<ul>
+<li><a href="https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305">dataapp_20150305</a> portal主程序，web应用</li>
+<li><a href="https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305">ReportDispatch_20150305</a> 报表调度主程序，web应用</li>
+<li><a href="https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305">ShellShedule_20150305</a> 报表调度脚本，jar应用</li>
+</ul></li>
+</ul>
+
+<h2>菜单查询逻辑优化</h2>
+
+<ul>
+<li>[x] 增加3个视图：</li>
+</ul>
+
+<ol>
+<li><code>V_SYS_R_ROLE_RIGHT</code>角色权限关联视图</li>
+<li><code>V_SYS_RIGHT</code>权限视图（整合了菜单和报表）</li>
+<li><code>V_SYS_RIGHT_TREE</code>权限树</li>
+</ol>
+
+<ul>
+<li>[x] 修改查询逻辑由<code>循环遍历查询</code>改为<code>一次查询</code></li>
+</ul>
+
+<h2>其他sql修改</h2>
+
+<ul>
+<li>delete语句<br>
+<code>delete from TABLE where 1=1 [and (...)]</code>
+改为<br>
+<code>delete from TABLE where 1=0 [or (...)]</code></li>
+</ul>
+
+<p>建议逻辑删除,慎用物理删除</p>
+
+<hr>
+
+<h1>portal 需求变更</h1>
+
+<h2>首页</h2>
+
+<ul>
+<li>[x] 欢迎页改成默认模块</li>
+<li>[x] 首页没权限的模块不显示（原来置灰）</li>
+<li>[x] 顶部菜单只显示一级</li>
+</ul>
+
+<h2>标准化管理模块</h2>
+
+<ul>
+<li>[x] 新增指标改成不需要申请单也可以新增</li>
+<li>[x] 新增维度做成不选择申请单可以新增</li>
+<li>[x] 指标信息加入KPI分类</li>
+<li>[x] 流程申请中返回按钮回到历史页面</li>
+<li>[x] 申请单附件丢失</li>
+<li>[x] 代办申请单默认状态禁用改为启用</li>
+</ul>
+
+<h2>OA指标字典</h2>
+
+<ul>
+<li>[x] 指标字典改为和portal一套程序，同数据库<br>
+<font size=1><em>注意：portal中针对oa指标字典新增加了一个<code>indicatorListPub.action</code>此页面对外开放，为了保证oa指标字典链接不变，更新时需要将<code>indicatorListPub.action</code> 改为<code>indicatorList.action</code>参考<code>applicationContext-security-basic.xml</code>片段：</em></font><br></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;!-- 指标字典开放 --&gt;
+&lt;s:intercept-url pattern=&quot;/system/indicator/indicatorList.action&quot; filters=&quot;none&quot; /&gt; 
+&lt;s:intercept-url pattern=&quot;/system/indicator/getIndicatorListPub.action&quot; filters=&quot;none&quot; /&gt; 
+&lt;s:intercept-url pattern=&quot;/system/indicator/getHistoryByIdPub.action&quot; filters=&quot;none&quot; /&gt;
+</code></pre></div>
+<p><code>struts-standardization.xml</code>片段：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;action name=&quot;indicatorList&quot; class=&quot;indicatorAction&quot; method=&quot;indicatorList&quot;&gt;
+    &lt;result name=&quot;success&quot;&gt;/pages/standardization/indicator/list1.jsp&lt;/result&gt;
+&lt;/action&gt;
+</code></pre></div>
+<ul>
+<li>[x] 标准化指标字典隐藏已禁用指标</li>
+</ul>
+
+<h2>cognos 集成</h2>
+
+<ul>
+<li>[x] 增加url查询参数</li>
+<li>[x] cognos登录改为form表单模式</li>
+</ul>
+
+<h2>数据管理模块</h2>
+
+<ul>
+<li>[x] 数据导入附件上传，数据存到180.1</li>
+<li>[x] 修改数据导入排序</li>
+</ul>
+
+<h2>增加内容发布模块</h2>
+
+<ul>
+<li>[x] 客户经营管理报表</li>
+<li>[x] 历史报表</li>
+</ul>
+
+<hr>
+
+<h1>portal 后续工作</h1>
+
+<h2>日常运维</h2>
+
+<ul>
+<li><p>[ ] 指标导出
+参考sql文件<a href="/atts/sql/%E5%AF%BC%E5%87%BA%E6%8C%87%E6%A0%87%E4%BF%A1%E6%81%AF.txt">导出指标信息</a>和合并User的java脚本<a href="/atts/java/XlsReader.java">XlsReader.java</a></p></li>
+<li><p>[ ] cognos报表上传到oa资源库
+可以在<code>系统监控</code> -&gt; <code>监控设置</code> -&gt; <code>报表调度数据维护</code> 进行维护
+<strong>调度流程参考<a href="2015-08-03-report-dispatch.md">离线调度</a></strong></p></li>
+</ul>
+
+<h2>了解websphere集群</h2>
+
+<ul>
+<li>[ ] 新生产环境为websphere集群，需要了解<strong>集群配置和基本部署操作参考<a href="2015-08-05-was-cluster.md">portal集群安装</a></strong></li>
+</ul>
+
+<h2>cognos集成</h2>
+
+<ul>
+<li>[ ] cognos登录存在跨域安全性问题</li>
+<li>[ ] 修改cognos服务器地址 ，<code>系统管理</code> -&gt; <code>门户维护</code> -&gt; <code>报表维护</code> -&gt; <code>报表服务器地址维护</code> -&gt; 启用</li>
+<li>[ ] 修改领导驾驶舱cognos地址，<code>系统管理</code> -&gt; <code>报表管理</code> -&gt; <code>驾驶舱菜单维护</code></li>
+</ul>
+
+<h2>cognos监控日志改进</h2>
+
+<ul>
+<li>[ ] <code>CubeMonitorAction.java</code> -&gt; <code>down()</code>文件直接从本地读取，改成远程读取可参考的实现方式：</li>
+</ul>
+
+<ol>
+<li>~~网络映射,80.4共享一个文件夹，portal通过形如<code>//10.129.80.4/share/aaa.log</code>的方式访问文件~~</li>
+<li>~~ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问~~</li>
+<li>http,80.4开放对log日志文件夹的web访问权限</li>
+</ol>
+
+<h2>系统停服通知</h2>
+
+<ul>
+<li>[ ] 增加关闭系统通知，关闭系统后访问系统显示<code>系统暂停服务</code>提示页面</li>
+</ul>
+
+<hr>
+
+<h1>其他</h1>
+
+<ul>
+<li>日志文件有点大可以将最新的日志截取另存为新文件<br>
+<code>tail -200000 catalina.out &gt; catalina.tail200000.out</code></li>
+</ul>
+
+
+      </section>
+      
+      <section class="comments">
+        
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/work/2015/08/03/EIP-summary" data-title="EIP总结" data-url="http://2le.me//work/2015/08/03/EIP-summary.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+        
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
+

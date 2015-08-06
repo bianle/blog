@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>知無涯</title>
+
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/styles.css">
+    <link rel="stylesheet" href="/themes/modernist/stylesheets/pygment_trac.css">
+    <script src="/themes/modernist/javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1><a href="/">知無涯</a></h1>
+        <p>生有涯，知無涯</p>
+        <ul>
+          <li><a href="https://github.com/bianle/blog/tree/gh-pages">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> EIP报表调度 
+        </h1>
+
+    <h1>调度流程</h1>
+
+<ul>
+<li>每天凌晨<code>T_REPORT_DISPATCHINFO</code>表报表状态(<code>EXECUTE_FLAG</code>)初始化为(0)</li>
+<li>cube刷新完后向portal数据库<code>T_DATA_SOURCE</code>表插入数据，触发器<code>TR_DS_REPORT_UPDATE</code>被触发，将<code>T_REPORT_DISPATCHINFO</code>表中刷新成功的报表状态(<code>EXECUTE_FLAG</code>)置为可执行(1)</li>
+</ul>
+
+<p><code>TR_DS_REPORT_UPDATE</code>内容：  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CREATE OR REPLACE TRIGGER &quot;PORTAL&quot;.&quot;TR_DS_REPORT_UPDATE&quot;
+AFTER INSERT ON T_DATA_SOURCE
+REFERENCING NEW AS n
+FOR EACH ROW MODE DB2SQL
+WHEN (n.DS_STATUS=&#39;OK&#39;)
+BEGIN ATOMIC
+
+DECLARE v_sou_ds INTEGER;
+DECLARE v_tar_ds INTEGER;
+DECLARE v_current_day VARCHAR(15);
+
+set v_current_day = (select current date from sysibm.sysdummy1);
+
+for v_m as select report_id from T_DS_REPORT where ds_id=n.ds_id
+do
+set v_sou_ds = (select count(*) from T_DS_REPORT where report_id=v_m.report_id);
+set v_tar_ds = (select count(*) from T_DATA_SOURCE where  substr(start_time,1,10) = v_current_day and ds_id in (select ds_id from T_DS_REPORT where report_id=v_m.report_id));
+
+IF (v_sou_ds = v_tar_ds) THEN
+update T_REPORT_DISPATCHINFO set EXECUTE_FLAG=&#39;1&#39; where report_id = v_m.report_id;
+END IF;
+
+end for;
+
+END
+</code></pre></div>
+<p>+所有cube刷新完毕后调度执行<code>rsh_shellSchedule.sh</code></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sh /informatic/PowerCenter8.6.1/server/infa_shared/shell_script/cognos/rsh_shellSchedule.sh
+</code></pre></div>
+<ul>
+<li><code>rsh_shellSchedule.sh</code> 远程执行tomcat用户下shellSchedule命令</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rsh tk-cognos -l tomcat /home/tomcat/shellSchedule/shellSchedule.sh
+</code></pre></div>
+<ul>
+<li><code>shellSchedule.sh</code>运行<code>shellSchedule.jar</code>jar包并在当前目录写下日志<code>shellSchedule.log</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/usr/java6/bin/java -jar /home/tomcat/shellSchedule/shellSchedule.jar &gt;&gt; /home/tomcat/shellSchedule/shellSchedule.log
+</code></pre></div>
+<ul>
+<li><p><code>shellSchedule.jar</code>调用<code>ReportDispatch</code>发布的webservice接口<code>http://10.129.80.4:8098/ReportDispatch/services/reportUpdateService</code>中的<code>shellUpdateReportInfo</code>服务(webservice接口配置在ShellSchedule中webservice.properties中配置)</p></li>
+<li><p><code>shellUpdateReportInfo</code>查询<code>T_REPORT_DISPATCHINFO</code>表查询执行状态为可执行的(EXECUTE_FLAG=1)导出报表并上传到OA服务器（上传配置文件在ReportDispatch中exportReport.properties中设置，数据库连接配置文件在db2Jdbc.properties中设置）</p></li>
+</ul>
+
+
+      </section>
+      
+      <section class="comments">
+        
+          <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/work/2015/08/03/report-dispatch" data-title="EIP报表调度" data-url="http://2le.me//work/2015/08/03/report-dispatch.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"2le"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+        
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bianle">bianle</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
+
