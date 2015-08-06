@@ -98,23 +98,23 @@ comments: false
 ---
 # portal 后续工作
 ## 日常运维
-- [] 指标导出
+- [ ] 指标导出
 参考sql文件[导出指标信息](/atts/sql/导出指标信息.txt)和合并User的java脚本[XlsReader.java](/atts/java/XlsReader.java)
 
-- [] cognos报表上传到oa资源库
+- [ ] cognos报表上传到oa资源库
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
 __调度流程参考[离线调度](report-dispatch.html)__
 
 ## 了解websphere集群
-- [] 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)__
+- [ ] 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](/java/2015/08/05/was-cluster.html)__
 
 ## cognos集成
-- [] cognos登录存在跨域安全性问题
-- [] 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
-- [] 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
+- [ ] cognos登录存在跨域安全性问题
+- [ ] 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
+- [ ] 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
 
 ##cognos监控日志改进
-- [] `CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
+- [ ] `CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
 
   1. 网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件
   2. ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问
