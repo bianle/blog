@@ -116,8 +116,8 @@ __调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 ##cognos监控日志改进
 - [ ] `CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
 
-  1. 网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件
-  2. ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问
+  1. ~~网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件~~
+  2. ~~ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问~~
   3. http,80.4开放对log日志文件夹的web访问权限
 
 ---
