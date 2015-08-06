@@ -117,8 +117,8 @@ disqus:
 username: bianle
 baseurl:
 basedir: blog
-# markdown: redcarpet
-markdown: kramdown
+markdown: redcarpet
+#markdown: kramdown
 safe: false
 highlighter: pygments
 title: 知無涯
