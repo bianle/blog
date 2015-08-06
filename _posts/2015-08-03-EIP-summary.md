@@ -6,7 +6,7 @@ comments: false
 ---
 ---
 # portal bug修改
-## portal 在本地测试机上springcurity报异常
++ [x] portal 在本地测试机上springcurity报异常  
 解决：
 修改`web.xml`文件,将`classpath:`改为`/WEB-INF/classes/`
 
@@ -27,13 +27,13 @@ comments: false
 
 ## 菜单查询逻辑优化
 
-1. 增加3个视图：
++ [x] 增加3个视图：
 
- + `V_SYS_R_ROLE_RIGHT`角色权限关联视图
- + `V_SYS_RIGHT`权限视图（整合了菜单和报表）
- + `V_SYS_RIGHT_TREE`权限树
+ 1. `V_SYS_R_ROLE_RIGHT`角色权限关联视图
+ 2. `V_SYS_RIGHT`权限视图（整合了菜单和报表）
+ 3. `V_SYS_RIGHT_TREE`权限树
 
-2. 修改查询逻辑由`循环遍历查询`改为`一次查询`
++ [x] 修改查询逻辑由`循环遍历查询`改为`一次查询`
 
 ## 其他sql修改
 + delete语句  
