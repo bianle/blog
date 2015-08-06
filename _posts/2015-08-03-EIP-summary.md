@@ -103,10 +103,10 @@ comments: false
 
 - [ ] cognos报表上传到oa资源库
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
-__调度流程参考[离线调度](report-dispatch.md)__
+__调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 
 ## 了解websphere集群
-- [ ] 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](was-cluster.md)__
+- [ ] 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](2015-08-03-was-cluster.md)__
 
 ## cognos集成
 - [ ] cognos登录存在跨域安全性问题
