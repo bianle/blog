@@ -132,6 +132,11 @@ __调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 
 ## cognos集成
 - [ ] cognos登录存在跨域安全性问题
+
+  1. portal和cognos服务器使用同一个域名，形如`http://www.taikang.com/dataapp/`和`http://www.taikang.com/dataapp/`
+  2. ~~客户端添加信任站点~~
+  3. 采用url传参数的方式（类似领导驾驶舱）
+  
 - [ ] 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
 - [ ] 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
 
@@ -140,11 +145,16 @@ __调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 
   1. ~~网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件~~
   2. ~~ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问~~
-  3. http,80.4开放对log日志文件夹的web访问权限
+  3. http,80.4开放对log日志文件夹的web访问权限，可在`cognos（80.4）`所在的tomcat下部署一个用于下载的web应用对外提供http下载功能
 
 ##系统停服通知
 
 - [ ] 增加关闭系统通知，关闭系统后访问系统显示`系统暂停服务`提示页面
+
+##cognos迁移到新服务器
+
+- [ ] ReportDispatch需要部署到was上
+- [ ] `shellShedule.jar` 和 `shellShedule.sh` 需要放到10,11,12其中一台服务器上，webservice链接改成200服务器
 
 ---
 #其他
