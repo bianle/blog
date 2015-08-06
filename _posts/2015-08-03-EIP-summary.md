@@ -132,7 +132,7 @@ __调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 ## cognos集成
 - [ ] cognos登录存在跨域安全性问题
 
-  1. portal和cognos服务器使用同一个域名，形如`http://www.taikang.com/dataapp/`和`http://www.taikang.com/dataapp/`
+  1. portal和cognos服务器使用同一个域名，形如`http://taikang.com/dataapp/`和`http://taikang.com/p2pd/servlet/dispatch/`
   2. ~~客户端添加信任站点~~
   3. 采用url传参数的方式（类似领导驾驶舱）
   
