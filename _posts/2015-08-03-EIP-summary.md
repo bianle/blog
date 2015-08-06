@@ -19,11 +19,11 @@ comments: false
 ---
 # portal 优化
 ## 将portal源代码加入svn库
-[x] 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:
++ [x] 原portal源代码版本管理混乱不完整，将整理后的portal源码加入svn，portal新分支:
 
-+ [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305) portal主程序，web应用
-+ [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305) 报表调度主程序，web应用
-+ [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305) 报表调度脚本，jar应用
+ - [dataapp_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/dataapp_20150305) portal主程序，web应用
+ - [ReportDispatch_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ReportDispatch_20150305) 报表调度主程序，web应用
+ - [ShellShedule_20150305](https://10.137.80.91:6103/svn/root/EIP/EIP2/dwcode/portal-java/ShellShedule_20150305) 报表调度脚本，jar应用
 
 ## 菜单查询逻辑优化
 
