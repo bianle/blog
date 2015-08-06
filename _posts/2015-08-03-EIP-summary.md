@@ -118,7 +118,51 @@ _建议`逻辑删除`,慎用`物理删除`_
 
 ---
 # portal 后续工作
-## 日常运维
+
+##导入菜单和用户角色 (★★★★★)
+
+cognos服务器不迁移完成此步骤portal服务器基本可用（缺少报表监控部分功能）
+
+- [ ] 菜单可整理成xls统一导入数据库（注意，id由序列生成，导入数据后需要修改序列的当前值）
+- [ ] 用户角色可整理成xls导入数据库同时注意序列问题
+- [ ] 新服务器未开通数据库客户端直连权限，可用web客户端（jdbexplorer）,系统上线后该客户端可考虑卸载
+
+##cognos监控日志改进 (★★★★☆)
+
+cognos服务器不迁移完成此步骤portal服务器可用
+
+- [ ] `CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
+
+  1. ~~网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件~~
+  2. ~~ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问~~
+  3. http,80.4开放对log日志文件夹的web访问权限，可在`cognos（80.4）`所在的tomcat下部署一个用于下载的web应用对外提供http下载功能
+
+## cognos集成 (★★★☆☆)
+- [ ] cognos登录存在跨域安全性问题
+
+  1. portal和cognos服务器使用同一个域名
+  如`http://taikang.com/dataapp/`和`http://taikang.com/p2pd/servlet/dispatch/`
+  2. ~~客户端添加信任站点~~
+  3. 采用url传参数的方式（类似领导驾驶舱）
+  
+- [ ] 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
+- [ ] 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
+
+##系统停服通知 (★★★☆☆)
+
+- [ ] 增加关闭系统通知，关闭系统后访问系统显示`系统暂停服务`提示页面
+
+##cognos迁移到新服务器 (★★★☆☆)
+
+cognos服务器迁移时需要做的工作
+
+- [ ] ReportDispatch需要部署到was上(注意修改配置文件)
+- [ ] `shellShedule.jar` 和 `shellShedule.sh` 需要放到10,11,12其中一台服务器上，webservice链接改成200服务器。
+
+## 日常运维 (★★☆☆☆)
+
+日常要处理的工作
+
 - [ ] 指标导出
 参考sql文件[导出指标信息](/atts/sql/导出指标信息.txt)和合并User的java脚本[XlsReader.java](/atts/java/XlsReader.java)
 
@@ -126,35 +170,8 @@ _建议`逻辑删除`,慎用`物理删除`_
 可以在`系统监控` -> `监控设置` -> `报表调度数据维护` 进行维护
 __调度流程参考[离线调度](2015-08-03-report-dispatch.md)__
 
-## 了解websphere集群
+## 了解websphere集群 (★★☆☆☆)
 - [ ] 新生产环境为websphere集群，需要了解__集群配置和基本部署操作参考[portal集群安装](2015-08-05-was-cluster.md)__
-
-## cognos集成
-- [ ] cognos登录存在跨域安全性问题
-
-  1. portal和cognos服务器使用同一个域名
-  形如`http://taikang.com/dataapp/`和`http://taikang.com/p2pd/servlet/dispatch/`
-  2. ~~客户端添加信任站点~~
-  3. 采用url传参数的方式（类似领导驾驶舱）
-  
-- [ ] 修改cognos服务器地址 ，`系统管理` -> `门户维护` -> `报表维护` -> `报表服务器地址维护` -> 启用
-- [ ] 修改领导驾驶舱cognos地址，`系统管理` -> `报表管理` -> `驾驶舱菜单维护`
-
-##cognos监控日志改进
-- [ ] `CubeMonitorAction.java` -> `down()`文件直接从本地读取，改成远程读取可参考的实现方式：
-
-  1. ~~网络映射,80.4共享一个文件夹，portal通过形如`//10.129.80.4/share/aaa.log`的方式访问文件~~
-  2. ~~ftp,80.4启动ftp服务，并开放端口给82.10,portal通过java ftp访问~~
-  3. http,80.4开放对log日志文件夹的web访问权限，可在`cognos（80.4）`所在的tomcat下部署一个用于下载的web应用对外提供http下载功能
-
-##系统停服通知
-
-- [ ] 增加关闭系统通知，关闭系统后访问系统显示`系统暂停服务`提示页面
-
-##cognos迁移到新服务器
-
-- [ ] ReportDispatch需要部署到was上
-- [ ] `shellShedule.jar` 和 `shellShedule.sh` 需要放到10,11,12其中一台服务器上，webservice链接改成200服务器
 
 ---
 #其他
