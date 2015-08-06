@@ -33,7 +33,7 @@ comments: false
  + `V_SYS_RIGHT`权限视图（整合了菜单和报表）
  + `V_SYS_RIGHT_TREE`权限树
 
-2. 修改查询逻辑由循环遍历查询改为一次查询
+2. 修改查询逻辑由`循环遍历查询`改为`一次查询`
 
 ## 其他sql修改
 + delete语句  
