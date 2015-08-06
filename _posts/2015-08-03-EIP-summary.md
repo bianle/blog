@@ -39,9 +39,8 @@ comments: false
 + [x] delete语句  
 `delete from TABLE where 1=1 [and (...)]`
 改为  
-`delete from TABLE where 1=0 [or (...)]`
-
-建议`逻辑删除`,慎用`物理删除`
+`delete from TABLE where 1=0 [or (...)]`  
+_建议`逻辑删除`,慎用`物理删除`_
 
 ---
 # portal 需求变更
