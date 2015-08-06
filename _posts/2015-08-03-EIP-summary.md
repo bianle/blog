@@ -36,12 +36,12 @@ comments: false
 + [x] 修改查询逻辑由`循环遍历查询`改为`一次查询`
 
 ## 其他sql修改
-+ delete语句  
++ [x] delete语句  
 `delete from TABLE where 1=1 [and (...)]`
 改为  
 `delete from TABLE where 1=0 [or (...)]`
 
-建议逻辑删除,慎用物理删除
+建议`逻辑删除`,慎用`物理删除`
 
 ---
 # portal 需求变更
@@ -63,6 +63,17 @@ comments: false
 + [x] 指标字典改为和portal一套程序，同数据库  
 <font size=1>_注意：portal中针对oa指标字典新增加了一个`indicatorListPub.action`此页面对外开放，为了保证oa指标字典链接不变，更新时需要将`indicatorListPub.action` 改为`indicatorList.action`参考`applicationContext-security-basic.xml`片段：_</font>  
 
+由
+
+```
+<!-- 指标字典开放 -->
+<s:intercept-url pattern="/system/indicator/indicatorListPub.action" filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getIndicatorListPub.action" filters="none" /> 
+<s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action" filters="none" />
+```
+
+改为
+
 ```
 <!-- 指标字典开放 -->
 <s:intercept-url pattern="/system/indicator/indicatorList.action" filters="none" /> 
@@ -70,7 +81,18 @@ comments: false
 <s:intercept-url pattern="/system/indicator/getHistoryByIdPub.action" filters="none" />
 ```
 
+
 `struts-standardization.xml`片段：
+
+由
+
+```
+<action name="indicatorList" class="indicatorAction" method="indicatorList">
+    <result name="success">/pages/standardization/indicator/list.jsp</result>
+</action>
+```
+
+改为
 
 ```
 <action name="indicatorList" class="indicatorAction" method="indicatorList">
