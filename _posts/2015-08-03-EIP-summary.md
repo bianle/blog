@@ -29,9 +29,9 @@ comments: false
 
 1. 增加3个视图：
 
-+ `V_SYS_R_ROLE_RIGHT`角色权限关联视图
-+ `V_SYS_RIGHT`权限视图（整合了菜单和报表）
-+ `V_SYS_RIGHT_TREE`权限树
+ + `V_SYS_R_ROLE_RIGHT`角色权限关联视图
+ + `V_SYS_RIGHT`权限视图（整合了菜单和报表）
+ + `V_SYS_RIGHT_TREE`权限树
 
 2. 修改查询逻辑由循环遍历查询改为一次查询
 
